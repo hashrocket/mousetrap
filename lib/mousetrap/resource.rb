@@ -4,6 +4,10 @@ module Mousetrap
     headers 'User-Agent' => 'Mousetrap Ruby Client'
     base_uri 'https://cheddargetter.com'
 
+    def self.get_resource(resource, code)
+      get "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}/code/#{code}"
+    end
+
     def self.get_resources(resource)
       get "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}"
     end

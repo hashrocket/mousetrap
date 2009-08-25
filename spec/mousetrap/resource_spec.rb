@@ -17,6 +17,13 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe ".get_resource" do
+    it "gets /xml/<resource>/get/productCode/<my_product_code>/code/<resource_code>" do
+      subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code/code/some_resource_code')
+      subject.get_resource 'widgets', 'some_resource_code'
+    end
+  end
+
   describe ".get_resources" do
     it "gets /xml/<resource>/get/productCode/<my_product_code>" do
       subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code')
