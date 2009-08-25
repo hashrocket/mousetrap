@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/mousetrap.rb",
      "lib/mousetrap/customer.rb",
      "lib/mousetrap/resource.rb",
+     "mousetrap.gemspec",
      "spec/integration/settings.example.yml",
      "spec/integration/smoke_test.rb",
      "spec/mousetrap/customer_spec.rb",
