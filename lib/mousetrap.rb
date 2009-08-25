@@ -4,5 +4,14 @@ begin; require 'rubygems'; rescue LoadError; end
 require 'httparty'
 
 module Mousetrap
-  autoload(:Client, 'mousetrap/client')
+  autoload(:Resource, 'mousetrap/resource')
+  autoload(:Customer, 'mousetrap/customer')
+  
+  class << self
+    attr_accessor :product_code
+    
+    def authenticate(user, password)
+      Resource.basic_auth user, password
+    end
+  end
 end

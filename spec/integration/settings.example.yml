@@ -1,0 +1,4 @@
+# Replace these with your CheddarGetter credentials.
+user: 'lark@example.com'
+password: 'abc123'
+product_code: 'my_product_code'
