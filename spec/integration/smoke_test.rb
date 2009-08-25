@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../lib/mousetrap'
 require 'yaml'
+require 'activesupport'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -9,13 +10,23 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Mousetrap.authenticate(settings['user'], settings['password'])
 Mousetrap.product_code = settings['product_code']
 
-puts Mousetrap::Customer['maasdxgliu@example.com'].to_yaml
+customers_hash = Mousetrap::Customer['maasdxgliu@example.com']
+customer_hash = customers_hash['customers']['customer'].slice 'firstName', 'lastName', 'email', 'code'
+customer = Mousetrap::Customer.new customer_hash
 
-puts Mousetrap::Plan['TEST'].to_yaml
-puts Mousetrap::Plan.all.to_yaml
+customer.first_name = random_string
+puts customer.save!
+
+customer_hash = Mousetrap::Customer['maasdxgliu@example.com']
+puts customer_hash.to_yaml
+
 
 
 __END__
+
+puts Mousetrap::Plan.all.to_yaml
+puts Mousetrap::Customer['maasdxgliu@example.com'].to_yaml
+puts Mousetrap::Plan['TEST'].to_yaml
 puts Mousetrap::Customer.all.to_yaml
 
 email = random_email_address
