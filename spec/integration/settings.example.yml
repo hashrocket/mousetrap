@@ -1,4 +1,6 @@
-# Replace these with your CheddarGetter credentials.
+# Replace user and password with your CheddarGetter credentials.
 user: 'lark@example.com'
 password: 'abc123'
-product_code: 'my_product_code'
+
+# Go create a product in the CheddarGetter web admin interface named "mousetrap_test".
+product_code: 'mousetrap_test'
