@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mousetrap}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Larkowski", "Sandro Turriate"]
@@ -13,13 +13,13 @@ Gem::Specification.new do |s|
   s.description = %q{CheddarGetter API Client in Ruby}
   s.email = %q{jonlarkowski@gmail.com}
   s.extra_rdoc_files = [
-    "README.rdoc"
+    "README.textile"
   ]
   s.files = [
     ".document",
      ".gitignore",
      "MIT-LICENSE",
-     "README.rdoc",
+     "README.textile",
      "Rakefile",
      "VERSION",
      "lib/mousetrap.rb",
