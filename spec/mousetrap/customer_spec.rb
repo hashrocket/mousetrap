@@ -11,16 +11,48 @@ describe Mousetrap::Customer do
   end
 
   describe '.create' do
-    it "creates a customer" do
-      subject.should_receive(:post_resource).with('customers', 'new', 'some_hash')
-      subject.create('some_hash')
+    before do
+      @customer_hash = {:first_name => 'joe', :last_name => 'smith', :code => '234sesa32', :email => 'joesmith@example.com'}
+      response = {'customers' => {'customer' => {'id' => '2d1244e8-e338-102c-a92d-40402145ee8b'}}}
+      subject.should_receive(:post_resource).with('customers', 'new', @customer_hash).and_return(response)
+    end
+
+    it "returns a Customer instance" do
+      subject.create(@customer_hash).should be_instance_of(Mousetrap::Customer)
+    end
+
+    it "is not a new_record?" do
+      subject.create(@customer_hash).should_not be_new_record
     end
   end
-  
+
   describe ".[]" do
-    it "gets a customer based on code" do
-      subject.should_receive(:get_resource).with('customers', 'some_customer_code')
+    before do
+      customer_hash = {
+        'id' => '2d1244e8-e338-102c-a92d-40402145ee8b',
+        'code' => 'asfkhw0',
+        'email' => 'lark@example.com',
+        'first_name' => 'Jon',
+        'last_name' => 'Larkowski'
+      }
+      server_response_hash = { 'customers' => { 'customer' => customer_hash } }
+      subject.should_receive(:get_resource).with('customers', 'some_customer_code').and_return(server_response_hash)
+    end
+    
+    it "gets a resource with customer code" do
       subject['some_customer_code']
+    end
+    
+    it "returns a Customer instance" do
+      subject['some_customer_code'].should be_instance_of(Mousetrap::Customer)
+    end
+
+    it "is not a new_record?" do
+      subject['some_customer_code'].should_not be_new_record
+    end
+
+    it "has a code assigned" do
+      subject['some_customer_code'].code.should == 'asfkhw0'
     end
   end
   
@@ -30,10 +62,14 @@ describe Mousetrap::Customer do
       customer.should be_instance_of(subject)
     end
     
-    it "takes a hash" do
+    it "requires a hash" do
       expect { Mousetrap::Customer.new }.to raise_error(StandardError)
     end
     
+    it 'is a new_record?' do
+      Mousetrap::Customer.new({}).should be_new_record
+    end
+
     describe "sets" do
       before do
         @customer = Mousetrap::Customer.new \
@@ -59,6 +95,7 @@ describe Mousetrap::Customer do
         @customer.code.should == 'asfkhw0'
       end
     end
+
   end
   
   describe "accessors" do
@@ -118,7 +155,7 @@ describe Mousetrap::Customer do
       }
       
       @customer.class.should_receive(:put_resource).with('customers',
-                                                          'edit-customer', @code, mutated_hash)
+                                                         'edit-customer', @code, mutated_hash)
       @customer.save!
     end
   end

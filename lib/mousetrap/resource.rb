@@ -15,10 +15,9 @@ module Mousetrap
     def self.post_resource(resource, action, hash)
       post "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}", :body => hash
     end
-    
+
     def self.put_resource(resource, action, resource_code, hash)
       path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}/code/#{resource_code}"
-      puts path
       post path, :body => hash
     end
   end
