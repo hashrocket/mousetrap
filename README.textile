@@ -1,0 +1,7 @@
+h1. Mousetrap
+
+_CheddarGetter API Client in Ruby_
+
+Docs coming Real Soon Now (TM).
+
+Copyright (c) 2009 Hashrocket. See MIT-LICENSE for details.
