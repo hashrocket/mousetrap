@@ -9,8 +9,9 @@ begin
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "jonlarkowski@gmail.com"
     gem.homepage = "http://github.com/l4rk/mousetrap"
-    gem.authors = ["Jon Larkowski"]
+    gem.authors = ["Jon Larkowski", "Sandro Turriate"]
     gem.add_development_dependency "rspec"
+    gem.add_dependency 'httparty', '>= 0.4.4'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
