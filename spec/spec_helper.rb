@@ -4,24 +4,18 @@ require 'mousetrap'
 require 'spec'
 require 'spec/autorun'
 
-def random_email_address
-  "#{random_string}@example.com"
-end
+# Requires supporting files with custom matchers and macros, etc,
+# in ./support/ and its subdirectories.
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-def random_string
-  random_alpha_string_of_length(10)
-end
+module Mousetrap
+  class Resource
+    def self.get(*args)
+      raise 'You must stub this, or should_receive at a higher level.'
+    end
 
-def random_alpha_string_of_length(length)
-  letters = *'a'..'z'
-  random_string_for_uniqueness = ''
-  length.times { random_string_for_uniqueness += letters[rand(letters.size - 1)]}
-  random_string_for_uniqueness
-end
-
-def random_number_string_of_length(length)
-  numbers = *'0'..'9'
-  random_string_for_uniqueness = ''
-  length.times { random_string_for_uniqueness += numbers[rand(numbers.size - 1)]}
-  random_string_for_uniqueness
+    def self.post(*args)
+      raise 'You must stub this, or should_receive at a higher level.'
+    end
+  end
 end
