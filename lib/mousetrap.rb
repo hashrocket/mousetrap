@@ -6,6 +6,7 @@ require 'httparty'
 module Mousetrap
   autoload(:Resource, 'mousetrap/resource')
   autoload(:Customer, 'mousetrap/customer')
+  autoload(:Plan, 'mousetrap/plan')
   
   class << self
     attr_accessor :product_code
