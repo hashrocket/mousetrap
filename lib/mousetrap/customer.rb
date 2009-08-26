@@ -1,10 +1,20 @@
 module Mousetrap
   class Customer < Resource
+    attr_accessor :id
     attr_accessor :code
     attr_accessor :email
     attr_accessor :first_name
     attr_accessor :last_name
-    attr_accessor :id
+
+    def attributes
+      {
+        :id => id,
+        :code => code,
+        :email => email,
+        :first_name => first_name,
+        :last_name => last_name,
+      }
+    end
 
     def initialize(hash={})
       hash.each do |key, value|
@@ -17,14 +27,13 @@ module Mousetrap
     end
 
     def save!
-      # TODO:  Not truly same semantics as ActiveRecord's save, because
-      # it doesn't create, it only updates right now.
-      hash = {:firstName => first_name,
-              :lastName  => last_name,
-              :email     => email }
-
       raise "code must not be blank" if code.nil?
-      self.class.put_resource 'customers', 'edit-customer', code, hash
+
+      if new_record?
+        self.class.create attributes_for_api
+      else
+        self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
+      end
     end
 
     def self.all
@@ -32,8 +41,8 @@ module Mousetrap
     end
 
     def self.create(hash)
-      response_hash = post_resource('customers', 'new', hash)
-      build_existing_record response_hash
+      response = post_resource('customers', 'new', attributes_for_api(hash))
+      build_existing_record response
     end
 
     def self.[](code)
@@ -56,6 +65,20 @@ module Mousetrap
       }
 
       customer = new(attributes)
+    end
+
+    def self.attributes_for_api(hash, new_record = true)
+      mutated_hash = {
+        :email => hash[:email],
+        :firstName => hash[:first_name],
+        :lastName => hash[:last_name],
+      }
+      mutated_hash.merge!(:code => hash[:code]) if new_record
+      mutated_hash
+    end
+
+    def attributes_for_api
+      self.class.attributes_for_api(attributes, new_record?)
     end
   end
 end

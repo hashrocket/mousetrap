@@ -11,7 +11,7 @@ describe Mousetrap::Customer do
   describe '.create' do
     before do
       customer_hash = Factory.attributes_for :new_customer
-      @customer_hash = HashWithIndifferentAccess.new customer_hash
+      @customer_hash = customer_hash
       @response = {'customers' => {'customer' => {'id' => '2d1244e8-e338-102c-a92d-40402145ee8b'}}}
       Mousetrap::Customer.stub(:post_resource).and_return(@response)
     end
@@ -19,7 +19,13 @@ describe Mousetrap::Customer do
     subject { Mousetrap::Customer.create(@customer_hash) }
 
     it "posts customer attributes" do
-      Mousetrap::Customer.should_receive(:post_resource).with('customers', 'new', @customer_hash).and_return(@response)
+      mutated_hash = {
+        :firstName => @customer_hash[:first_name],
+        :lastName => @customer_hash[:last_name],
+        :email => @customer_hash[:email],
+        :code => @customer_hash[:code],
+      }
+      Mousetrap::Customer.should_receive(:post_resource).with('customers', 'new', mutated_hash).and_return(@response)
       subject
     end
 
@@ -95,6 +101,23 @@ describe Mousetrap::Customer do
 
         @customer.class.should_receive(:put_resource).with(
           'customers', 'edit-customer', @customer.code, mutated_hash)
+        @customer.save!
+      end
+    end
+
+    context "for new records" do
+      before do
+        @customer = Factory :new_customer
+      end
+
+      it 'calls create' do
+        mutated_hash = {
+          :firstName => @customer.first_name,
+          :lastName => @customer.last_name,
+          :email => @customer.email,
+          :code => @customer.code
+        }
+        Mousetrap::Customer.should_receive(:create).with(mutated_hash)
         @customer.save!
       end
     end
