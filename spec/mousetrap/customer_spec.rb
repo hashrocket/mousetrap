@@ -78,43 +78,6 @@ describe Mousetrap::Customer do
         subject.code.should == 'asfkhw0'
       end
     end
-
-  end
-
-  describe "accessors" do
-    subject { Mousetrap::Customer.allocate }
-
-    it "first_name" do
-      subject.should respond_to(:first_name)
-    end
-
-    it "first_name=" do
-      subject.should respond_to(:first_name=)
-    end
-
-    it "last_name" do
-      subject.should respond_to(:last_name)
-    end
-
-    it "last_name=" do
-      subject.should respond_to(:last_name=)
-    end
-
-    it "email" do
-      subject.should respond_to(:email)
-    end
-
-    it "email=" do
-      subject.should respond_to(:email=)
-    end
-
-    it "code" do
-      subject.should respond_to(:code)
-    end
-
-    it "code=" do
-      subject.should respond_to(:code=)
-    end
   end
 
   describe '#save' do
