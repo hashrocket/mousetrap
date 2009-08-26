@@ -10,27 +10,7 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Mousetrap.authenticate(settings['user'], settings['password'])
 Mousetrap.product_code = settings['product_code']
 
-customers_hash = Mousetrap::Customer['maasdxgliu@example.com']
-customer_hash = customers_hash['customers']['customer'].slice 'firstName', 'lastName', 'email', 'code'
-customer = Mousetrap::Customer.new customer_hash
-
-customer.first_name = random_string
-puts customer.save!
-
-customer_hash = Mousetrap::Customer['maasdxgliu@example.com']
-puts customer_hash.to_yaml
-
-
-
-__END__
-
-puts Mousetrap::Plan.all.to_yaml
-puts Mousetrap::Customer['maasdxgliu@example.com'].to_yaml
-puts Mousetrap::Plan['TEST'].to_yaml
-puts Mousetrap::Customer.all.to_yaml
-
 email = random_email_address
-
 attributes = {
   'code' => email,
   'firstName' => 'Example',
@@ -48,3 +28,24 @@ attributes = {
 
 customer = Mousetrap::Customer.create attributes
 puts customer
+
+
+
+__END__
+
+puts Mousetrap::Plan.all.to_yaml
+puts Mousetrap::Customer['maasdxgliu@example.com'].to_yaml
+puts Mousetrap::Plan['TEST'].to_yaml
+puts Mousetrap::Customer.all.to_yaml
+
+
+customers_hash = Mousetrap::Customer['maasdxgliu@example.com']
+customer_hash = customers_hash['customers']['customer'].slice 'firstName', 'lastName', 'email', 'code'
+customer = Mousetrap::Customer.new customer_hash
+
+customer.first_name = random_string
+puts customer.save!
+
+customer_hash = Mousetrap::Customer['maasdxgliu@example.com']
+puts customer_hash.to_yaml
+
