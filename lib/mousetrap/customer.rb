@@ -5,9 +5,8 @@ module Mousetrap
     attr_accessor :first_name
     attr_accessor :last_name
     attr_accessor :id
-    protected :id=
 
-    def initialize(hash)
+    def initialize(hash={})
       hash.each do |key, value|
         self.send("#{key}=", value)
       end

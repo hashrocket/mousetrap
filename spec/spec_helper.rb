@@ -3,6 +3,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'mousetrap'
 require 'spec'
 require 'spec/autorun'
+require 'factory_girl'
+require 'active_support'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

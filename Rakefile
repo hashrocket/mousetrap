@@ -10,8 +10,10 @@ begin
     gem.email = "jonlarkowski@gmail.com"
     gem.homepage = "http://github.com/l4rk/mousetrap"
     gem.authors = ["Jon Larkowski", "Sandro Turriate"]
-    gem.add_development_dependency "rspec", '>= 1.2.8'
     gem.add_dependency 'httparty', '>= 0.4.4'
+    gem.add_development_dependency "activesupport", '>= 2.3.3'
+    gem.add_development_dependency "rspec", '>= 1.2.8'
+    gem.add_development_dependency 'thoughtbot-factory_girl', '>= 1.2.2'
   end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
