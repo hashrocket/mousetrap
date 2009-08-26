@@ -16,12 +16,6 @@ module Mousetrap
       }
     end
 
-    def initialize(hash={})
-      hash.each do |key, value|
-        self.send("#{key}=", value)
-      end
-    end
-
     def new_record?
       id.nil?
     end
@@ -40,11 +34,6 @@ module Mousetrap
       end
     end
 
-    def self.all
-      response = get_resources 'customers'
-      build_resources_from response
-    end
-
     def self.create(hash)
       response = post_resource('customers', 'new', attributes_for_api(hash))
       build_resource_from response
@@ -58,6 +47,14 @@ module Mousetrap
 
     protected
 
+    def self.plural_resource_name
+      'customers'
+    end
+
+    def self.singular_resource_name
+      'customer'
+    end
+
     def self.new_from_api(attributes_from_api)
       attributes = {
         :id         => attributes_from_api['id'],
@@ -68,19 +65,6 @@ module Mousetrap
       }
 
       new(attributes)
-    end
-
-    def self.build_resource_from(response)
-      attributes_from_api = response['customers']['customer']
-      new_from_api attributes_from_api
-    end
-
-    def self.build_resources_from(response)
-      resources = []
-      response['customers']['customer'].each do |customer_hash|
-        resources << new_from_api(customer_hash)
-      end
-      resources
     end
 
     def self.attributes_for_api(hash, new_record = true)
