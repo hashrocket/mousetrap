@@ -3,7 +3,15 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Mousetrap::Customer do
   describe '.all' do
     it 'gets customers resources' do
+      Mousetrap::Customer.stub(:build_resources_from)
       Mousetrap::Customer.should_receive(:get_resources).with('customers')
+      Mousetrap::Customer.all
+    end
+
+    it 'builds customer resources' do
+      response = stub
+      Mousetrap::Customer.stub(:get_resources => response)
+      Mousetrap::Customer.should_receive(:build_resources_from).with(response)
       Mousetrap::Customer.all
     end
   end

@@ -10,20 +10,23 @@ module Mousetrap
     end
 
     def self.get_resource(resource, code)
-      get "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}/code/#{code}"
+      path = "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}/code/#{code}"
+      get path
     end
 
     def self.get_resources(resource)
-      get "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}"
+      path = "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}"
+      get path
     end
 
-    def self.post_resource(resource, action, hash)
-      post "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}", :body => hash
+    def self.post_resource(resource, action, attributes)
+      path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}"
+      post path, :body => attributes
     end
 
-    def self.put_resource(resource, action, resource_code, hash)
+    def self.put_resource(resource, action, resource_code, attributes)
       path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}/code/#{resource_code}"
-      post path, :body => hash
+      post path, :body => attributes
     end
   end
 end

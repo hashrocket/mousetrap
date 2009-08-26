@@ -41,34 +41,46 @@ module Mousetrap
     end
 
     def self.all
-      get_resources 'customers'
+      response = get_resources 'customers'
+      build_resources_from response
     end
 
     def self.create(hash)
       response = post_resource('customers', 'new', attributes_for_api(hash))
-      build_existing_record response
+      build_resource_from response
     end
 
     def self.[](code)
       response = get_resource('customers', code)
-      build_existing_record response
+      build_resource_from response
     end
 
 
     protected
 
-    def self.build_existing_record(response)
-      customer_hash = response['customers']['customer']
-
+    def self.new_from_api(attributes_from_api)
       attributes = {
-        :id => customer_hash['id'],
-        :code => customer_hash['code'],
-        :first_name => customer_hash['firstName'],
-        :last_name => customer_hash['lastName'],
-        :email => customer_hash['email']
+        :id         => attributes_from_api['id'],
+        :code       => attributes_from_api['code'],
+        :first_name => attributes_from_api['firstName'],
+        :last_name  => attributes_from_api['lastName'],
+        :email      => attributes_from_api['email']
       }
 
-      customer = new(attributes)
+      new(attributes)
+    end
+
+    def self.build_resource_from(response)
+      attributes_from_api = response['customers']['customer']
+      new_from_api attributes_from_api
+    end
+
+    def self.build_resources_from(response)
+      resources = []
+      response['customers']['customer'].each do |customer_hash|
+        resources << new_from_api(customer_hash)
+      end
+      resources
     end
 
     def self.attributes_for_api(hash, new_record = true)
