@@ -4,9 +4,9 @@ describe Mousetrap::Resource do
   before do
     Mousetrap.product_code = 'my_product_code'
   end
-  
+
   subject { Mousetrap::Resource }
-  
+
   describe "class" do
     it "sets the base URI" do
       subject.default_options[:base_uri].should == 'https://cheddargetter.com'
@@ -44,7 +44,7 @@ describe Mousetrap::Resource do
       subject.post_resource 'widgets', 'some_action', 'some_hash'
     end
   end
-  
+
   describe ".put_resource" do
     it "put to /xml/<resource>/<action>/productCode/<product_code>/code/<resource_code>" do
       subject.should_receive(:post).with(
