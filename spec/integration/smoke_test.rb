@@ -10,6 +10,33 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Mousetrap.authenticate(settings['user'], settings['password'])
 Mousetrap.product_code = settings['product_code']
 
+
+
+all_customers = Mousetrap::Customer.all
+puts all_customers.inspect
+puts all_customers.to_yaml
+
+all_customers.each { |c| c.destroy }
+
+all_customers = Mousetrap::Customer.all
+puts all_customers.inspect
+puts all_customers.to_yaml
+
+__END__
+
+code = 'maasdxgliu@example.com'
+c = Mousetrap::Customer[code]
+puts c.to_yaml
+c.destroy
+
+puts '-' * 80
+c = Mousetrap::Customer[code]
+puts c.to_yaml
+
+
+
+
+
 email = random_email_address
 attributes = {
   'code' => email,
@@ -31,7 +58,6 @@ puts customer
 
 
 
-__END__
 
 puts Mousetrap::Plan.all.to_yaml
 puts Mousetrap::Customer['maasdxgliu@example.com'].to_yaml
