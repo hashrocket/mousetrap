@@ -26,6 +26,10 @@ module Mousetrap
       id.nil?
     end
 
+    def destroy
+      self.class.delete_resource('customers', code) unless new_record?
+    end
+
     def save!
       raise "code must not be blank" if code.nil?
 

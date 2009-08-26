@@ -86,6 +86,24 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe '#destroy' do
+    context "for existing records" do
+      it 'destroys' do
+        customer = Factory :existing_customer
+        Mousetrap::Customer.should_receive(:delete_resource).with('customers', customer.code)
+        customer.destroy
+      end
+    end
+
+    context "for new records" do
+      it "does nothing" do
+        customer = Factory :new_customer
+        Mousetrap::Customer.should_not_receive(:delete_resource)
+        customer.destroy
+      end
+    end
+  end
+
   describe '#save' do
     context "for existing records" do
       before do
