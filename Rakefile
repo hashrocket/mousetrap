@@ -9,7 +9,7 @@ begin
     gem.description = %Q{CheddarGetter API Client in Ruby}
     gem.email = "jonlarkowski@gmail.com"
     gem.homepage = "http://github.com/l4rk/mousetrap"
-    gem.authors = ["Jon Larkowski", "Sandro Turriate"]
+    gem.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
     gem.add_dependency 'httparty', '>= 0.4.4'
     gem.add_development_dependency "activesupport", '>= 2.3.3'
     gem.add_development_dependency "rspec", '>= 1.2.8'
