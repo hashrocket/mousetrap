@@ -10,10 +10,48 @@ module Mousetrap
       end
     end
 
+    def self.[](code)
+      response = get_resource plural_resource_name, code
+      build_resource_from response
+    end
+
     def self.all
       response = get_resources plural_resource_name
       build_resources_from response
     end
+
+    def self.create(attributes = {})
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+    def self.delete(code)
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+    def self.exists?(code)
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+    def destroy
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+    def exists?(code)
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+    def new?
+      id.nil?
+    end
+
+    alias new_record? new?
+
+    def save
+      raise NotImplementedError, NO_BUSINESS_NEED
+    end
+
+
+    protected
 
     def self.delete_resource(resource, code)
       path = "/xml/#{resource}/delete/productCode/#{Mousetrap.product_code}/code/#{code}"
@@ -41,11 +79,21 @@ module Mousetrap
     end
 
 
-    protected
+    def self.new_from_api
+      raise 'You must implement self.new_from_api in your subclass.'
+    end
+
+    def self.plural_resource_name
+      raise 'You must implement self.plural_resource_name in your subclass.'
+    end
+
+    def self.singular_resource_name
+      raise 'You must implement self.singular_resource_name in your subclass.'
+    end
 
     def self.build_resource_from(response)
-      attributes = extract_resources(response)
-      new_from_api(attributes)
+      resource_attributes = extract_resources(response)
+      new_from_api(resource_attributes)
     end
 
     def self.build_resources_from(response)
