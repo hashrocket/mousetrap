@@ -46,26 +46,24 @@ module Mousetrap
       'customer'
     end
 
-    def self.new_from_api(attributes_from_api)
-      attributes = {
-        :id         => attributes_from_api['id'],
-        :code       => attributes_from_api['code'],
-        :first_name => attributes_from_api['firstName'],
-        :last_name  => attributes_from_api['lastName'],
-        :email      => attributes_from_api['email']
-      }
-
-      new(attributes)
-    end
-
     def self.attributes_for_api(hash, new_record = true)
       mutated_hash = {
-        :email => hash[:email],
+        :email     => hash[:email],
         :firstName => hash[:first_name],
-        :lastName => hash[:last_name],
+        :lastName  => hash[:last_name],
       }
       mutated_hash.merge!(:code => hash[:code]) if new_record
       mutated_hash
+    end
+
+    def self.attributes_from_api(attributes)
+      {
+        :id         => attributes['id'],
+        :code       => attributes['code'],
+        :first_name => attributes['firstName'],
+        :last_name  => attributes['lastName'],
+        :email      => attributes['email']
+      }
     end
 
     def attributes_for_api

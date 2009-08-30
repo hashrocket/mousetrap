@@ -1,5 +1,30 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+module Mousetrap
+  class Widget < Resource
+    attr_accessor :id
+    attr_accessor :code
+
+
+    protected
+
+    def self.attributes_from_api(attributes)
+      {
+        :id   => attributes['id'],
+        :code => attributes['code'],
+      }
+    end
+
+    def self.plural_resource_name
+      'widgets'
+    end
+
+    def self.singular_resource_name
+      'widget'
+    end
+  end
+end
+
 describe Mousetrap::Resource do
   before do
     Mousetrap.product_code = 'my_product_code'
@@ -14,6 +39,43 @@ describe Mousetrap::Resource do
 
     it "set the header to our client name" do
       subject.headers['User-Agent'].should == 'Mousetrap Ruby Client'
+    end
+  end
+
+  describe ".[]" do
+    before do
+      customer_hash = Factory.attributes_for :existing_customer
+      customer_hash = HashWithIndifferentAccess.new customer_hash
+      @code = customer_hash[:code]
+      @server_response_hash = { 'widgets' => { 'widget' => customer_hash } }
+      Mousetrap::Widget.stub(:get_resource => @server_response_hash)
+    end
+
+    it "gets a resource with widget code" do
+      Mousetrap::Widget.should_receive(:get_resource).with('widgets', @code).and_return(@server_response_hash)
+      Mousetrap::Widget[@code]
+    end
+
+    context "returned widget instance" do
+      subject { Mousetrap::Widget[@code] }
+      it { should be_instance_of(Mousetrap::Widget) }
+      it { should_not be_new_record }
+      it { subject.code.should == @code }
+    end
+  end
+
+  describe '.all' do
+    it 'gets widgets resources' do
+      Mousetrap::Widget.stub(:build_resources_from)
+      Mousetrap::Widget.should_receive(:get_resources).with('widgets')
+      Mousetrap::Widget.all
+    end
+
+    it 'builds widget resources' do
+      response = stub
+      Mousetrap::Widget.stub(:get_resources => response)
+      Mousetrap::Widget.should_receive(:build_resources_from).with(response)
+      Mousetrap::Widget.all
     end
   end
 

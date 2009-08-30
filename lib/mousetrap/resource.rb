@@ -46,6 +46,10 @@ module Mousetrap
 
     alias new_record? new?
 
+    def self.new_from_api(attributes)
+      new(attributes_from_api(attributes))
+    end
+
     def save
       raise NotImplementedError, NO_BUSINESS_NEED
     end
@@ -76,11 +80,6 @@ module Mousetrap
     def self.put_resource(resource, action, resource_code, attributes)
       path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}/code/#{resource_code}"
       post path, :body => attributes
-    end
-
-
-    def self.new_from_api
-      raise 'You must implement self.new_from_api in your subclass.'
     end
 
     def self.plural_resource_name

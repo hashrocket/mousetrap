@@ -15,14 +15,12 @@ module Mousetrap
       'plan'
     end
 
-    def self.new_from_api(attributes_from_api)
-      attributes = {
-        :id   => attributes_from_api['id'],
-        :code => attributes_from_api['code'],
-        :name => attributes_from_api['name'],
+    def self.attributes_from_api(attributes)
+      {
+        :id   => attributes['id'],
+        :code => attributes['code'],
+        :name => attributes['name'],
       }
-
-      new(attributes)
     end
   end
 end

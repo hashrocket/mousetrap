@@ -11,10 +11,6 @@ module Mousetrap
     # A Subscription belongs to a Customer.
     attr_accessor :customer_code
 
-    def self.new_from_api(attributes)
-      new(attributes_from_api(attributes))
-    end
-
     # TODO:  not sure if .all or .[] will work
 
     def attributes
