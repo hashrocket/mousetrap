@@ -4,9 +4,9 @@ begin; require 'rubygems'; rescue LoadError; end
 require 'httparty'
 
 module Mousetrap
-  autoload(:Resource, 'mousetrap/resource')
   autoload(:Customer, 'mousetrap/customer')
   autoload(:Plan, 'mousetrap/plan')
+  autoload(:Resource, 'mousetrap/resource')
 
   class << self
     attr_accessor :product_code
