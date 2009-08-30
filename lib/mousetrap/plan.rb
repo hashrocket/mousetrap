@@ -1,8 +1,9 @@
 module Mousetrap
   class Plan < Resource
-    attr_accessor :id
-    attr_accessor :code
-    attr_accessor :name
+    attr_accessor \
+      :id,
+      :code,
+      :name
 
 
     protected

@@ -1,23 +1,23 @@
 module Mousetrap
   class Subscription < Resource
     # Attributes we send _to_ the API.
-    attr_accessor :plan_code
-    attr_accessor :billing_first_name
-    attr_accessor :billing_last_name
-    attr_accessor :credit_card_number
-    attr_accessor :credit_card_expiration
-    attr_accessor :billing_zip_code
+    attr_accessor \
+      :plan_code,
+      :billing_first_name,
+      :billing_last_name,
+      :credit_card_number,
+      :credit_card_expiration,
+      :billing_zip_code,
 
-    # A Subscription belongs to a Customer.
-    attr_accessor :customer_code
+      :customer_code, # belongs to customer
 
-    # Attributes that come from the API, a subset of what we sent to the API.
-    attr_accessor :id
-    attr_accessor :canceled_at
-    attr_accessor :created_at
-    attr_accessor :credit_card_expiration_date
-    attr_accessor :credit_card_last_four_digits
-    attr_accessor :credit_card_type
+      # Attributes that come _from_ the API.
+      :id,
+      :canceled_at,
+      :created_at,
+      :credit_card_expiration_date,
+      :credit_card_last_four_digits,
+      :credit_card_type
 
     # TODO:  not sure if .all or .[] will work
 
