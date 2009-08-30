@@ -90,7 +90,7 @@ describe Mousetrap::Customer do
 
         @customer.class.should_receive(:put_resource).with(
           'customers', 'edit-customer', @customer.code, mutated_hash)
-        @customer.save!
+        @customer.save
       end
     end
 
@@ -107,7 +107,7 @@ describe Mousetrap::Customer do
           :code => @customer.code
         }
         Mousetrap::Customer.should_receive(:create).with(mutated_hash)
-        @customer.save!
+        @customer.save
       end
     end
   end
