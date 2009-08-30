@@ -1,29 +1,34 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
+  def customer_attributes_for_api(customer)
+    {
+      :firstName => customer.first_name,
+      :lastName => customer.last_name,
+      :email => customer.email,
+      :code => customer.code,
+      :subscription => {
+        :planCode     => customer.subscription.plan_code,
+        :ccFirstName  => customer.subscription.billing_first_name,
+        :ccLastName   => customer.subscription.billing_last_name,
+        :ccNumber     => customer.subscription.credit_card_number,
+        :ccExpiration => customer.subscription.credit_card_expiration,
+        :ccZip        => customer.subscription.billing_zip_code,
+      }
+    }
+  end
+
   describe '.create' do
     before do
-      customer_hash = Factory.attributes_for :new_customer
-      @customer_hash = customer_hash
-      @response = {'customers' => {'customer' => {'id' => '2d1244e8-e338-102c-a92d-40402145ee8b'}}}
-      Mousetrap::Customer.stub(:post_resource).and_return(@response)
+      @customer_hash = Factory.attributes_for :new_customer
     end
 
-    subject { Mousetrap::Customer.create(@customer_hash) }
-
-    it "posts customer attributes" do
-      mutated_hash = {
-        :firstName => @customer_hash[:first_name],
-        :lastName => @customer_hash[:last_name],
-        :email => @customer_hash[:email],
-        :code => @customer_hash[:code],
-      }
-      Mousetrap::Customer.should_receive(:post_resource).with('customers', 'new', mutated_hash).and_return(@response)
-      subject
+    it "makes a new customer" do
+      customer_stub = mock('object', :null_object => true)
+      Mousetrap::Customer.should_receive(:new).with(@customer_hash).and_return(customer_stub)
+      Mousetrap::Customer.stub(:build_resource_from => stub(:id => 42))
+      Mousetrap::Customer.create(@customer_hash)
     end
-
-    it { should be_instance_of(Mousetrap::Customer) }
-    it { should_not be_new_record }
   end
 
   describe ".new" do
@@ -82,32 +87,22 @@ describe Mousetrap::Customer do
       end
 
       it 'posts to edit-customer action' do
-        mutated_hash = {
-          :firstName => @customer.first_name,
-          :lastName => @customer.last_name,
-          :email => @customer.email,
-        }
+        attributes_for_api = customer_attributes_for_api(@customer)
+
+        # We don't send code for existing API resources.
+        attributes_for_api.delete(:code)
 
         @customer.class.should_receive(:put_resource).with(
-          'customers', 'edit-customer', @customer.code, mutated_hash)
+          'customers', 'edit-customer', @customer.code, attributes_for_api)
         @customer.save
       end
     end
 
     context "for new records" do
-      before do
-        @customer = Factory :new_customer
-      end
-
       it 'calls create' do
-        mutated_hash = {
-          :firstName => @customer.first_name,
-          :lastName => @customer.last_name,
-          :email => @customer.email,
-          :code => @customer.code
-        }
-        Mousetrap::Customer.should_receive(:create).with(mutated_hash)
-        @customer.save
+        customer = Factory :new_customer
+        customer.should_receive(:create)
+        customer.save
       end
     end
   end

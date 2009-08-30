@@ -1,6 +1,6 @@
 module Mousetrap
   class Subscription < Resource
-    attr_accessor :id
+    # Attributes we send _to_ the API.
     attr_accessor :plan_code
     attr_accessor :billing_first_name
     attr_accessor :billing_last_name
@@ -10,6 +10,14 @@ module Mousetrap
 
     # A Subscription belongs to a Customer.
     attr_accessor :customer_code
+
+    # Attributes that come from the API, a subset of what we sent to the API.
+    attr_accessor :id
+    attr_accessor :canceled_at
+    attr_accessor :created_at
+    attr_accessor :credit_card_expiration_date
+    attr_accessor :credit_card_last_four_digits
+    attr_accessor :credit_card_type
 
     # TODO:  not sure if .all or .[] will work
 
@@ -57,8 +65,6 @@ module Mousetrap
     end
 
     def self.attributes_from_api(attributes)
-      puts 'asdfadslfjkasdklfakjlsdfkjlasfd'
-      puts attributes.inspect
       {
         :id                     => attributes['id'],
         :plan_code              => attributes['planCode'],

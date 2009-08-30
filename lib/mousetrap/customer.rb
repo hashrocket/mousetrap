@@ -6,14 +6,30 @@ module Mousetrap
     attr_accessor :first_name
     attr_accessor :last_name
 
+    attr_accessor :subscription
+
+    def subscription_attributes=(attributes)
+      self.subscription = Subscription.new attributes
+    end
+
     def attributes
       {
-        :id => id,
-        :code => code,
-        :email => email,
+        :id         => id,
+        :code       => code,
+        :email      => email,
         :first_name => first_name,
-        :last_name => last_name,
+        :last_name  => last_name,
       }
+    end
+
+    def attributes_for_api
+      a = self.class.attributes_for_api(attributes, new_record?)
+
+      if subscription
+        a[:subscription] = subscription.attributes_for_api
+      end
+
+      a
     end
 
     def destroy
@@ -21,18 +37,23 @@ module Mousetrap
     end
 
     def save
-      raise "code must not be blank" if code.nil?
-
-      if new_record?
-        self.class.create attributes_for_api
-      else
-        self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
-      end
+      new? ? create : update
     end
 
-    def self.create(hash)
-      response = post_resource('customers', 'new', attributes_for_api(hash))
-      build_resource_from response
+    def self.create(attributes)
+      object = new(attributes)
+      response = object.save
+      returned_customer = build_resource_from response
+      object.id = returned_customer.id
+      # TODO: what other attrs to copy over?
+      object
+    end
+
+    def self.new_from_api(attributes)
+      customer = new(attributes_from_api(attributes))
+      customer.subscription = Subscription.new_from_api(
+        attributes['subscriptions']['subscription'])
+      customer
     end
 
 
@@ -46,13 +67,13 @@ module Mousetrap
       'customer'
     end
 
-    def self.attributes_for_api(hash, new_record = true)
+    def self.attributes_for_api(attributes, new_record = true)
       mutated_hash = {
-        :email     => hash[:email],
-        :firstName => hash[:first_name],
-        :lastName  => hash[:last_name],
+        :email     => attributes[:email],
+        :firstName => attributes[:first_name],
+        :lastName  => attributes[:last_name],
       }
-      mutated_hash.merge!(:code => hash[:code]) if new_record
+      mutated_hash.merge!(:code => attributes[:code]) if new_record
       mutated_hash
     end
 
@@ -66,8 +87,12 @@ module Mousetrap
       }
     end
 
-    def attributes_for_api
-      self.class.attributes_for_api(attributes, new_record?)
+    def create
+      self.class.post_resource 'customers', 'new', attributes_for_api
+    end
+
+    def update
+      self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
     end
   end
 end
