@@ -4,6 +4,8 @@ begin; require 'rubygems'; rescue LoadError; end
 require 'httparty'
 
 module Mousetrap
+  NO_BUSINESS_NEED = "No business need at this time."
+
   autoload(:Customer, 'mousetrap/customer')
   autoload(:Plan, 'mousetrap/plan')
   autoload(:Resource, 'mousetrap/resource')
