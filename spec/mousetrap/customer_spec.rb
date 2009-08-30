@@ -21,13 +21,30 @@ describe Mousetrap::Customer do
   describe '.create' do
     before do
       @customer_hash = Factory.attributes_for :new_customer
+      @customer = Mousetrap::Customer.new @customer_hash
+      @customer.stub(:save)
+      Mousetrap::Customer.stub(:new => @customer)
+      Mousetrap::Customer.stub(:build_resource_from => stub(:id => 0))
     end
 
-    it "makes a new customer" do
-      customer_stub = mock('object', :null_object => true)
-      Mousetrap::Customer.should_receive(:new).with(@customer_hash).and_return(customer_stub)
-      Mousetrap::Customer.stub(:build_resource_from => stub(:id => 42))
+    it 'instantiates a customer with a hash of attributes' do
+      Mousetrap::Customer.should_receive(:new).with(@customer_hash).and_return(@customer)
       Mousetrap::Customer.create(@customer_hash)
+    end
+
+    it 'saves the new customer instance' do
+      @customer.should_receive(:save)
+      Mousetrap::Customer.create(@customer_hash)
+    end
+
+    it 'sets the id of the newly created customer' do
+      Mousetrap::Customer.stub(:build_resource_from => stub(:id => 1))
+      @customer.should_receive(:id=).with(1)
+      Mousetrap::Customer.create(@customer_hash)
+    end
+
+    it 'returns an instance of Mousetrap::Customer' do
+      Mousetrap::Customer.create(@customer_hash).should be_instance_of(Mousetrap::Customer)
     end
   end
 
