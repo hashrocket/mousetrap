@@ -4,10 +4,6 @@ module Mousetrap
     attr_accessor :code
     attr_accessor :name
 
-    def self.[](code)
-      get_resource 'plans', code
-    end
-
 
     protected
 

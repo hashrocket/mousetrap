@@ -1,21 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
-  describe '.all' do
-    it 'gets customers resources' do
-      Mousetrap::Customer.stub(:build_resources_from)
-      Mousetrap::Customer.should_receive(:get_resources).with('customers')
-      Mousetrap::Customer.all
-    end
-
-    it 'builds customer resources' do
-      response = stub
-      Mousetrap::Customer.stub(:get_resources => response)
-      Mousetrap::Customer.should_receive(:build_resources_from).with(response)
-      Mousetrap::Customer.all
-    end
-  end
-
   describe '.create' do
     before do
       customer_hash = Factory.attributes_for :new_customer
@@ -39,28 +24,6 @@ describe Mousetrap::Customer do
 
     it { should be_instance_of(Mousetrap::Customer) }
     it { should_not be_new_record }
-  end
-
-  describe ".[]" do
-    before do
-      customer_hash = Factory.attributes_for :existing_customer
-      customer_hash = HashWithIndifferentAccess.new customer_hash
-      @code = customer_hash[:code]
-      @server_response_hash = { 'customers' => { 'customer' => customer_hash } }
-      Mousetrap::Customer.stub(:get_resource => @server_response_hash)
-    end
-
-    it "gets a resource with customer code" do
-      Mousetrap::Customer.should_receive(:get_resource).with('customers', @code).and_return(@server_response_hash)
-      Mousetrap::Customer[@code]
-    end
-
-    context "returned customer instance" do
-      subject { Mousetrap::Customer[@code] }
-      it { should be_instance_of(Mousetrap::Customer) }
-      it { should_not be_new_record }
-      it { subject.code.should == @code }
-    end
   end
 
   describe ".new" do

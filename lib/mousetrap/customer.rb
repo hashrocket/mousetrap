@@ -16,10 +16,6 @@ module Mousetrap
       }
     end
 
-    def new_record?
-      id.nil?
-    end
-
     def destroy
       self.class.delete_resource('customers', code) unless new_record?
     end
@@ -36,11 +32,6 @@ module Mousetrap
 
     def self.create(hash)
       response = post_resource('customers', 'new', attributes_for_api(hash))
-      build_resource_from response
-    end
-
-    def self.[](code)
-      response = get_resource('customers', code)
       build_resource_from response
     end
 
