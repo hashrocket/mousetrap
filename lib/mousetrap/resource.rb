@@ -97,9 +97,17 @@ module Mousetrap
 
     def self.build_resources_from(response)
       resources = []
-      extract_resources(response).each do |customer_hash|
-        resources << new_from_api(customer_hash)
+
+      response_resources = extract_resources(response)
+
+      if response_resources.is_a?(Array)
+        extract_resources(response).each do |resource_attributes|
+          resources << new_from_api(resource_attributes)
+        end
+      else
+        resources << new_from_api(response_resources)
       end
+
       resources
     end
 
