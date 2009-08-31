@@ -1,12 +1,12 @@
 module Mousetrap
   class Customer < Resource
     attr_accessor \
-     :id,
-     :code,
-     :email,
-     :first_name,
-     :last_name,
-     :subscription
+      :id,
+      :code,
+      :email,
+      :first_name,
+      :last_name,
+      :subscription
 
     def subscription_attributes=(attributes)
       self.subscription = Subscription.new attributes
