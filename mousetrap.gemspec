@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jon Larkowski", "Sandro Turriate"]
-  s.date = %q{2009-08-25}
+  s.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
+  s.date = %q{2009-09-01}
   s.description = %q{CheddarGetter API Client in Ruby}
   s.email = %q{jonlarkowski@gmail.com}
   s.extra_rdoc_files = [
@@ -24,27 +24,39 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/mousetrap.rb",
      "lib/mousetrap/customer.rb",
+     "lib/mousetrap/plan.rb",
      "lib/mousetrap/resource.rb",
+     "lib/mousetrap/subscription.rb",
      "mousetrap.gemspec",
+     "spec/factories.rb",
      "spec/integration/settings.example.yml",
      "spec/integration/smoke_test.rb",
+     "spec/integration/spike.rb",
      "spec/mousetrap/customer_spec.rb",
+     "spec/mousetrap/plan_spec.rb",
      "spec/mousetrap/resource_spec.rb",
+     "spec/mousetrap/subscription_spec.rb",
      "spec/mousetrap_spec.rb",
      "spec/spec.opts",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/support/random_data.rb"
   ]
-  s.homepage = %q{http://github.com/l4rk/mousetrap}
+  s.homepage = %q{http://github.com/hashrocket/mousetrap}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{CheddarGetter API Client in Ruby}
   s.test_files = [
-    "spec/integration/smoke_test.rb",
+    "spec/factories.rb",
+     "spec/integration/smoke_test.rb",
+     "spec/integration/spike.rb",
      "spec/mousetrap/customer_spec.rb",
+     "spec/mousetrap/plan_spec.rb",
      "spec/mousetrap/resource_spec.rb",
+     "spec/mousetrap/subscription_spec.rb",
      "spec/mousetrap_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/support/random_data.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -52,14 +64,20 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, [">= 1.2.8"])
       s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_development_dependency(%q<activesupport>, [">= 2.3.3"])
+      s.add_development_dependency(%q<rspec>, [">= 1.2.8"])
+      s.add_development_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
     else
-      s.add_dependency(%q<rspec>, [">= 1.2.8"])
       s.add_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_dependency(%q<activesupport>, [">= 2.3.3"])
+      s.add_dependency(%q<rspec>, [">= 1.2.8"])
+      s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
     end
   else
-    s.add_dependency(%q<rspec>, [">= 1.2.8"])
     s.add_dependency(%q<httparty>, [">= 0.4.4"])
+    s.add_dependency(%q<activesupport>, [">= 2.3.3"])
+    s.add_dependency(%q<rspec>, [">= 1.2.8"])
+    s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
   end
 end
