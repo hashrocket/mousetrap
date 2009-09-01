@@ -6,7 +6,8 @@ module Mousetrap
       :billing_first_name,
       :billing_last_name,
       :credit_card_number,
-      :credit_card_expiration,
+      :credit_card_expiration_month,
+      :credit_card_expiration_year,
       :billing_zip_code,
 
       :customer_code, # belongs to customer
@@ -23,13 +24,14 @@ module Mousetrap
 
     def attributes
       {
-        :id => id,
-        :plan_code => plan_code,
-        :billing_first_name => billing_first_name,
-        :billing_last_name => billing_last_name,
-        :credit_card_number => credit_card_number,
-        :credit_card_expiration => credit_card_expiration,
-        :billing_zip_code => billing_zip_code,
+        :id                           => id,
+        :plan_code                    => plan_code,
+        :billing_first_name           => billing_first_name,
+        :billing_last_name            => billing_last_name,
+        :credit_card_number           => credit_card_number,
+        :credit_card_expiration_month => credit_card_expiration_month,
+        :credit_card_expiration_year  => credit_card_expiration_year,
+        :billing_zip_code             => billing_zip_code,
       }
     end
 
@@ -53,14 +55,15 @@ module Mousetrap
       'subscription'
     end
 
-    def self.attributes_for_api(resource_attributes)
+    def self.attributes_for_api(attributes)
       {
-        :planCode     => resource_attributes[:plan_code],
-        :ccFirstName  => resource_attributes[:billing_first_name],
-        :ccLastName   => resource_attributes[:billing_last_name],
-        :ccNumber     => resource_attributes[:credit_card_number],
-        :ccExpiration => resource_attributes[:credit_card_expiration],
-        :ccZip        => resource_attributes[:billing_zip_code],
+        :planCode     => attributes[:plan_code],
+        :ccFirstName  => attributes[:billing_first_name],
+        :ccLastName   => attributes[:billing_last_name],
+        :ccNumber     => attributes[:credit_card_number],
+        :ccExpMonth   => attributes[:credit_card_expiration_month],
+        :ccExpYear    => attributes[:credit_card_expiration_year],
+        :ccZip        => attributes[:billing_zip_code],
       }
     end
 
@@ -71,7 +74,7 @@ module Mousetrap
         :created_at                   => attributes['createdDatetime'],
         :credit_card_expiration_date  => attributes['ccExpirationDate'],
         :credit_card_last_four_digits => attributes['ccLastFour'],
-        :credit_card_type             => attributes['ccType']
+        :credit_card_type             => attributes['ccType'],
       }
     end
   end
