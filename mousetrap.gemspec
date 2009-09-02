@@ -64,18 +64,18 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_runtime_dependency(%q<httparty>, [">= 0.4.2"])
       s.add_development_dependency(%q<activesupport>, [">= 2.3.3"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.8"])
       s.add_development_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
     else
-      s.add_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_dependency(%q<httparty>, [">= 0.4.2"])
       s.add_dependency(%q<activesupport>, [">= 2.3.3"])
       s.add_dependency(%q<rspec>, [">= 1.2.8"])
       s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
     end
   else
-    s.add_dependency(%q<httparty>, [">= 0.4.4"])
+    s.add_dependency(%q<httparty>, [">= 0.4.2"])
     s.add_dependency(%q<activesupport>, [">= 2.3.3"])
     s.add_dependency(%q<rspec>, [">= 1.2.8"])
     s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])

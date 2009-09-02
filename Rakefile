@@ -10,7 +10,7 @@ begin
     gem.email = "jonlarkowski@gmail.com"
     gem.homepage = "http://github.com/hashrocket/mousetrap"
     gem.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
-    gem.add_dependency 'httparty', '>= 0.4.4'
+    gem.add_dependency 'httparty', '>= 0.4.2'
     gem.add_development_dependency "activesupport", '>= 2.3.3'
     gem.add_development_dependency "rspec", '>= 1.2.8'
     gem.add_development_dependency 'thoughtbot-factory_girl', '>= 1.2.2'
