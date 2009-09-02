@@ -12,7 +12,8 @@ describe Mousetrap::Customer do
         :ccFirstName  => customer.subscription.billing_first_name,
         :ccLastName   => customer.subscription.billing_last_name,
         :ccNumber     => customer.subscription.credit_card_number,
-        :ccExpiration => customer.subscription.credit_card_expiration,
+        :ccExpMonth   => customer.subscription.credit_card_expiration_month,
+        :ccExpYear    => customer.subscription.credit_card_expiration_year,
         :ccZip        => customer.subscription.billing_zip_code,
       }
     }
