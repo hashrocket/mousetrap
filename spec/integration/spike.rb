@@ -33,9 +33,8 @@ def customers
 end
 
 def destroy_all_customers
-  all_customers = Mousetrap::Customer.all
-  all_customers.each { |c| c.destroy }
+  Mousetrap::Customer.destroy_all
 end
 
-#destroy_all_customers
+destroy_all_customers
 #customers
