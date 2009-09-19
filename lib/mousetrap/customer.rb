@@ -49,6 +49,10 @@ module Mousetrap
       object
     end
 
+    def self.destroy_all
+      all.each { |object| object.destroy }
+    end
+
     def self.new_from_api(attributes)
       customer = new(attributes_from_api(attributes))
       customer.subscription = Subscription.new_from_api(

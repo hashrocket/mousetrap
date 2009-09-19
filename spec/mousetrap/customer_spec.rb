@@ -49,6 +49,22 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe ".destroy_all" do
+    it "finds all" do
+      Mousetrap::Customer.should_receive(:all).and_return([])
+      Mousetrap::Customer.destroy_all
+    end
+
+    it "calls destroy on each customer" do
+      c1, c2, c3 = mock, mock, mock
+      Mousetrap::Customer.stub(:all => [c1, c2,c3])
+      c1.should_receive :destroy
+      c2.should_receive :destroy
+      c3.should_receive :destroy
+      Mousetrap::Customer.destroy_all
+    end
+  end
+
   describe ".new" do
     subject do
       Mousetrap::Customer.new \
