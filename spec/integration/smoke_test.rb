@@ -1,7 +1,10 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-require File.dirname(__FILE__) + '/../../lib/mousetrap'
+require File.expand_path('../../../lib/mousetrap', __FILE__)
+
+require 'spec'
+require 'spec/autorun'
+require 'factory_girl'
+require 'active_support'
 require 'yaml'
-require 'activesupport'
 
 Dir["#{File.dirname(__FILE__)}/../support/**/*.rb"].each {|f| require f}
 
