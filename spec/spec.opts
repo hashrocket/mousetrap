@@ -1,4 +1,2 @@
 --colour
---format specdoc
---loadby mtime
---reverse
+--format nested
