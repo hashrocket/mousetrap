@@ -21,20 +21,33 @@ def plans
   puts test_plan.to_yaml
 end
 
-def customers
+def all_customers
+  all_customers = Mousetrap::Customer.all
+  puts all_customers.to_yaml
+end
+
+def create_customer
   customer = Factory :new_customer
   customer.save
 
   api_customer = Mousetrap::Customer[customer.code]
   puts api_customer.to_yaml
-
-  #all_customers = Mousetrap::Customer.all
-  #puts all_customers.to_yaml
 end
 
 def destroy_all_customers
   Mousetrap::Customer.destroy_all
 end
 
-destroy_all_customers
-#customers
+# create_customer
+
+code = 'igcuvfehrc@example.com'
+api_customer = Mousetrap::Customer[code]
+puts api_customer.to_yaml
+puts '-' * 80
+puts 'cancel'
+puts api_customer.cancel
+puts '-' * 80
+api_customer = Mousetrap::Customer[code]
+puts api_customer.to_yaml
+
+

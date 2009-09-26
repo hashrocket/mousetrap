@@ -57,6 +57,11 @@ module Mousetrap
 
     protected
 
+    def self.cancel_resource(resource, code)
+      path = "/xml/#{resource}/cancel/productCode/#{Mousetrap.product_code}/code/#{code}"
+      post path
+    end
+
     def self.delete_resource(resource, code)
       path = "/xml/#{resource}/delete/productCode/#{Mousetrap.product_code}/code/#{code}"
       post path

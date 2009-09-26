@@ -79,6 +79,13 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe ".cancel_resource" do
+    it "gets /xml/<resource>/cancel/productCode/<my_product_code>/code/<resource_code>" do
+      subject.should_receive(:post).with('/xml/widgets/cancel/productCode/my_product_code/code/some_resource_code')
+      subject.cancel_resource 'widgets', 'some_resource_code'
+    end
+  end
+
   describe ".delete_resource" do
     it "gets /xml/<resource>/delete/productCode/<my_product_code>/code/<resource_code>" do
       subject.should_receive(:post).with('/xml/widgets/delete/productCode/my_product_code/code/some_resource_code')

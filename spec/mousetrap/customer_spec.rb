@@ -96,6 +96,24 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe '#cancel' do
+    context "for existing records" do
+      it 'cancels' do
+        customer = Factory :existing_customer
+        Mousetrap::Customer.should_receive(:cancel_resource).with('customers', customer.code)
+        customer.cancel
+      end
+    end
+
+    context "for new records" do
+      it "does nothing" do
+        customer = Factory :new_customer
+        Mousetrap::Customer.should_not_receive(:cancel_resource)
+        customer.cancel
+      end
+    end
+  end
+
   describe '#destroy' do
     context "for existing records" do
       it 'destroys' do

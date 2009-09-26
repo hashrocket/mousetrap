@@ -22,7 +22,31 @@ Spec::Runner.configure do |config|
 end
 
 describe "The Wrapper Gem" do
-  it "works" do
-    true.should be_true
+  describe Mousetrap::Customer do
+    describe "#cancel" do
+      describe "Given a customer" do
+        before :all do
+          @customer = Factory :new_customer
+          @customer.save
+          @api_customer = Mousetrap::Customer[@customer.code]
+        end
+
+        describe "When I cancel" do
+          before :all do
+            @api_customer.cancel
+          end
+
+          describe "And I get the customer" do
+            before :all do
+              @api_customer = Mousetrap::Customer[@customer.code]
+            end
+
+            it "Then I should see a cancelation date on subscription" do
+              @api_customer.subscription.canceled_at.should be
+            end
+          end
+        end
+      end
+    end
   end
 end

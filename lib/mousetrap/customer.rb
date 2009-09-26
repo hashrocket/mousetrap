@@ -32,6 +32,10 @@ module Mousetrap
       a
     end
 
+    def cancel
+      self.class.cancel_resource('customers', code) unless new_record?
+    end
+
     def destroy
       self.class.delete_resource('customers', code) unless new_record?
     end
