@@ -57,33 +57,40 @@ module Mousetrap
 
     protected
 
-    def self.cancel_resource(resource, code)
-      path = "/xml/#{resource}/cancel/productCode/#{Mousetrap.product_code}/code/#{code}"
+    def self.resource_path(resource, action, code = nil)
+      path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}"
+      path += "/code/#{code}" if code
+      path
+    end
+
+    def self.member_action(resource, action, code)
+      path = resource_path(resource, action, code)
       post path
+    end
+
+    def self.cancel_resource(resource, code)
+      member_action(resource, 'cancel', code)
     end
 
     def self.delete_resource(resource, code)
-      path = "/xml/#{resource}/delete/productCode/#{Mousetrap.product_code}/code/#{code}"
-      post path
+      member_action(resource, 'delete', code)
     end
 
     def self.get_resource(resource, code)
-      path = "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}/code/#{code}"
-      get path
+      get resource_path(resource, 'get', code)
     end
 
     def self.get_resources(resource)
-      path = "/xml/#{resource}/get/productCode/#{Mousetrap.product_code}"
-      get path
+      get resource_path(resource, 'get')
     end
 
     def self.post_resource(resource, action, attributes)
-      path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}"
+      path = resource_path(resource, action)
       post path, :body => attributes
     end
 
-    def self.put_resource(resource, action, resource_code, attributes)
-      path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}/code/#{resource_code}"
+    def self.put_resource(resource, action, code, attributes)
+      path = resource_path(resource, action, code)
       post path, :body => attributes
     end
 
