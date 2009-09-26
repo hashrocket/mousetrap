@@ -12,6 +12,15 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Mousetrap.authenticate(settings['user'], settings['password'])
 Mousetrap.product_code = settings['product_code']
 
+Spec::Runner.configure do |config|
+  config.before :suite do
+    begin
+      Mousetrap::Customer.destroy_all
+    rescue
+    end
+  end
+end
+
 describe "The Wrapper Gem" do
   it "works" do
     true.should be_true
