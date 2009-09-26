@@ -33,7 +33,7 @@ module Mousetrap
     end
 
     def cancel
-      self.class.cancel_resource('customers', code) unless new_record?
+      member_action 'cancel' unless new_record?
     end
 
     def destroy

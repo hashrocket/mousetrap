@@ -100,15 +100,15 @@ describe Mousetrap::Customer do
     context "for existing records" do
       it 'cancels' do
         customer = Factory :existing_customer
-        Mousetrap::Customer.should_receive(:cancel_resource).with('customers', customer.code)
+        customer.should_receive(:member_action).with('cancel')
         customer.cancel
       end
     end
 
     context "for new records" do
       it "does nothing" do
-        customer = Factory :new_customer
-        Mousetrap::Customer.should_not_receive(:cancel_resource)
+        customer = Factory.build :new_customer
+        customer.should_not_receive(:member_action).with('cancel')
         customer.cancel
       end
     end

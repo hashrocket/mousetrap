@@ -57,6 +57,10 @@ module Mousetrap
 
     protected
 
+    def member_action(action)
+      self.class.member_action(self.class.plural_resource_name, action, code)
+    end
+
     def self.resource_path(resource, action, code = nil)
       path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}"
       path += "/code/#{code}" if code
@@ -71,10 +75,6 @@ module Mousetrap
       else
         post path
       end
-    end
-
-    def self.cancel_resource(resource, code)
-      member_action(resource, 'cancel', code)
     end
 
     def self.delete_resource(resource, code)
