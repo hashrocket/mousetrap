@@ -115,7 +115,7 @@ describe Mousetrap::Resource do
   end
 
   describe ".put_resource" do
-    it "put to /xml/<resource>/<action>/productCode/<product_code>/code/<resource_code>" do
+    it "puts to /xml/<resource>/<action>/productCode/<product_code>/code/<resource_code>" do
       subject.should_receive(:post).with(
         '/xml/widgets/some_action/productCode/my_product_code/code/some_widget_code',
         :body => 'some_hash')

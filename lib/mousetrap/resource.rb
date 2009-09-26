@@ -63,9 +63,14 @@ module Mousetrap
       path
     end
 
-    def self.member_action(resource, action, code)
+    def self.member_action(resource, action, code, attributes = nil)
       path = resource_path(resource, action, code)
-      post path
+
+      if attributes
+        post path, :body => attributes
+      else
+        post path
+      end
     end
 
     def self.cancel_resource(resource, code)
@@ -74,6 +79,10 @@ module Mousetrap
 
     def self.delete_resource(resource, code)
       member_action(resource, 'delete', code)
+    end
+
+    def self.put_resource(resource, action, code, attributes)
+      member_action(resource, action, code, attributes)
     end
 
     def self.get_resource(resource, code)
@@ -86,11 +95,6 @@ module Mousetrap
 
     def self.post_resource(resource, action, attributes)
       path = resource_path(resource, action)
-      post path, :body => attributes
-    end
-
-    def self.put_resource(resource, action, code, attributes)
-      path = resource_path(resource, action, code)
       post path, :body => attributes
     end
 
