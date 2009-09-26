@@ -36,10 +36,6 @@ module Mousetrap
       member_action 'cancel' unless new_record?
     end
 
-    def destroy
-      self.class.delete_resource('customers', code) unless new_record?
-    end
-
     def save
       new? ? create : update
     end

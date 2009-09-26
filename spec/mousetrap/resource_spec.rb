@@ -79,6 +79,23 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe '#destroy' do
+    context "for existing records" do
+      it 'destroys' do
+        widget = Mousetrap::Widget.new
+        widget.stub :new_record? => false
+        widget.should_receive(:member_action).with('delete')
+        widget.destroy
+      end
+    end
+
+    #context "for new records" do
+      #it "does nothing" do
+        #customer = Factory :new_customer
+        #Mousetrap::Customer.should_not_receive(:delete_resource)
+        #customer.destroy
+      #end
+    #end
   end
 
 

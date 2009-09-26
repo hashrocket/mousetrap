@@ -33,7 +33,7 @@ module Mousetrap
     end
 
     def destroy
-      raise NotImplementedError, NO_BUSINESS_NEED
+      member_action 'delete' unless new_record?
     end
 
     def exists?(code)
