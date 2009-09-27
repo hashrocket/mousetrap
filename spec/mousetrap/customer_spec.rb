@@ -1,6 +1,51 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
+  # customers: 
+  #   customer: 
+  #     firstName: nvnawrelyv
+  #     lastName: vklidifvfd
+  #     email: bvvljaeegs@example.com
+  #     code: ablntsorai@example.com
+  #     company: 
+  #     gatewayToken: 
+  #     id: eac1cf0e-fc5b-102c-a92d-40402145ee8b
+  #     createdDatetime: "2009-09-27T02:16:15+00:00"
+  #     modifiedDatetime: "2009-09-27T02:16:16+00:00"
+  #     subscriptions: 
+  #       subscription: 
+  #         gatewayToken: 
+  #         id: eac26b4e-fc5b-102c-a92d-40402145ee8b
+  #         createdDatetime: "2009-09-27T02:16:15+00:00"
+  #         ccType: visa
+  #         ccLastFour: "1111"
+  #         ccExpirationDate: "2012-12-31T00:00:00+00:00"
+  #         canceledDatetime: 
+  #         plans: 
+  #           plan: 
+  #             name: Test
+  #             setupChargeAmount: "0.00"
+  #             code: TEST
+  #             recurringChargeAmount: "42.00"
+  #             billingFrequencyQuantity: "1"
+  #             trialDays: "0"
+  #             id: 5fbb9a84-e27f-102c-a92d-40402145ee8b
+  #             billingFrequency: monthly
+  #             createdDatetime: "2009-08-25T04:24:34+00:00"
+  #             recurringChargeCode: TEST_RECURRING
+  #             isActive: "1"
+  #             billingFrequencyUnit: months
+  #             description: Test
+  #             billingFrequencyPer: month
+  #             setupChargeCode: TEST_SETUP
+  #         invoices: 
+  #           invoice: 
+  #             number: "2"
+  #             billingDatetime: "2009-10-27T02:16:15+00:00"
+  #             id: eac74d62-fc5b-102c-a92d-40402145ee8b
+  #             createdDatetime: "2009-09-27T02:16:15+00:00"
+  #             type: subscription
+  
   def customer_attributes_for_api(customer)
     {
       :firstName => customer.first_name,
