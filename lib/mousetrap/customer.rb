@@ -103,6 +103,9 @@ module Mousetrap
 
     def create
       response = self.class.post_resource 'customers', 'new', attributes_for_api
+
+      raise response['error'] if response['error']
+
       returned_customer = self.class.build_resource_from response
       self.id = returned_customer.id
       response
