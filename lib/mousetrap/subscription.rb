@@ -10,9 +10,10 @@ module Mousetrap
       :credit_card_expiration_year,
       :billing_zip_code,
 
-      :customer_code, # belongs to customer
+      :customer_code # belongs to customer
 
-      # Attributes that come _from_ the API.
+    # Attributes that come _from_ the API.
+    attr_reader \
       :id,
       :canceled_at,
       :created_at,
@@ -50,6 +51,14 @@ module Mousetrap
 
 
     protected
+
+    attr_writer \
+      :id,
+      :canceled_at,
+      :created_at,
+      :credit_card_expiration_date,
+      :credit_card_last_four_digits,
+      :credit_card_type
 
     def self.plural_resource_name
       'subscriptions'
