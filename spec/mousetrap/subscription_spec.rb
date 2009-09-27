@@ -9,4 +9,12 @@ describe Mousetrap::Subscription do
   #   id: 46ad3f1c-e472-102c-a92d-40402145ee8b
   #   ccLastFour: "1111"
   #   canceledDatetime: 
+
+  describe '#destroy' do
+    it "raises a NotImplementedError" do
+      expect do
+        Mousetrap::Subscription.new.destroy
+      end.to raise_error(NotImplementedError)
+    end
+  end
 end

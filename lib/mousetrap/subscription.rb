@@ -39,6 +39,10 @@ module Mousetrap
       self.class.attributes_for_api(attributes)
     end
 
+    def destroy
+      raise NotImplementedError, API_UNSUPPORTED
+    end
+
     def save
       mutated_attributes = attributes_for_api(attributes)
       self.class.put_resource('customers', 'edit-subscription', customer_code, mutated_attributes)
