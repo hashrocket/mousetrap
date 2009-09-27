@@ -58,29 +58,6 @@ describe "The Wrapper Gem" do
       end
     end
 
-    describe "#save" do
-      describe "When I save a customer" do
-        before :all do
-          @customer = Factory :new_customer
-          @customer.save
-        end
-
-        it_should_behave_like "a Customer record from CheddarGetter"
-
-        describe "And I save it again, with different attributes" do
-          before :all do
-            attributes = Factory.attributes_for :new_customer
-            @customer.first_name = attributes[:first_name]
-            @customer.last_name = attributes[:last_name]
-            @customer.email = attributes[:email]
-            @customer.save
-          end
-
-          it_should_behave_like "a Customer record from CheddarGetter"
-        end
-      end
-    end
-
     describe "#cancel" do
       describe "Given a customer" do
         before :all do
@@ -103,6 +80,29 @@ describe "The Wrapper Gem" do
               @api_customer.subscription.canceled_at.should be
             end
           end
+        end
+      end
+    end
+
+    describe "#save" do
+      describe "When I save a customer" do
+        before :all do
+          @customer = Factory :new_customer
+          @customer.save
+        end
+
+        it_should_behave_like "a Customer record from CheddarGetter"
+
+        describe "And I save it again, with different attributes" do
+          before :all do
+            attributes = Factory.attributes_for :new_customer
+            @customer.first_name = attributes[:first_name]
+            @customer.last_name = attributes[:last_name]
+            @customer.email = attributes[:email]
+            @customer.save
+          end
+
+          it_should_behave_like "a Customer record from CheddarGetter"
         end
       end
     end
