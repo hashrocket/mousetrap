@@ -64,6 +64,35 @@ describe Mousetrap::Customer do
     }
   end
 
+  describe '.all' do
+    before do
+      Mousetrap::Customer.stub :build_resources_from
+    end
+
+    it "gets all customers" do
+      Mousetrap::Customer.should_receive(:get_resources).with('customers').and_return('some hash')
+      Mousetrap::Customer.all
+    end
+
+    it "handles kludgy 'no customers found' response" do
+      Mousetrap::Customer.stub :get_resources => { 'error' => "Bad request: No customers found." }
+      Mousetrap::Customer.all.should == []
+    end
+
+    it "raises error if response has one" do
+      expect do
+        Mousetrap::Customer.stub :get_resources => { 'error' => "some other error" }
+        Mousetrap::Customer.all
+      end.to raise_error(RuntimeError, "some other error")
+    end
+
+    it "builds resources from the response" do
+      Mousetrap::Customer.stub :get_resources => 'some hash'
+      Mousetrap::Customer.should_receive(:build_resources_from).with('some hash')
+      Mousetrap::Customer.all
+    end
+  end
+
   describe '.create' do
     before do
       @customer_hash = Factory.attributes_for :new_customer

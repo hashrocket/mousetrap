@@ -47,6 +47,25 @@ end
 
 describe "The Wrapper Gem" do
   describe Mousetrap::Customer do
+    describe ".all" do
+      describe "Given a few customers on CheddarGetter" do
+        before :all do
+          3.times { Factory(:new_customer).save }
+          violated "Couldn't save customers" unless Mousetrap::Customer.all.size == 3
+        end
+
+        describe "When I call .all" do
+          before :all do
+            @all_customers = Mousetrap::Customer.all
+          end
+
+          it "Then I should get all the customers" do
+            @all_customers.size.should == 3
+          end
+        end
+      end
+    end
+
     describe ".create" do
       describe "When I create a customer" do
         before :all do

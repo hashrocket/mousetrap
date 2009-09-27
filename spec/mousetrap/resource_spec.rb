@@ -64,21 +64,6 @@ describe Mousetrap::Resource do
     end
   end
 
-  describe '.all' do
-    it 'gets widgets resources' do
-      Mousetrap::Widget.stub(:build_resources_from)
-      Mousetrap::Widget.should_receive(:get_resources).with('widgets')
-      Mousetrap::Widget.all
-    end
-
-    it 'builds widget resources' do
-      response = stub
-      Mousetrap::Widget.stub(:get_resources => response)
-      Mousetrap::Widget.should_receive(:build_resources_from).with(response)
-      Mousetrap::Widget.all
-    end
-  end
-
   describe '#destroy' do
     context "for existing records" do
       it 'destroys' do

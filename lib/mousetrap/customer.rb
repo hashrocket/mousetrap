@@ -40,6 +40,20 @@ module Mousetrap
       new? ? create : update
     end
 
+    def self.all
+      response = get_resources plural_resource_name
+
+      if response['error']
+        if response['error'] == "Bad request: No customers found."
+          return []
+        else
+          raise response['error']
+        end
+      end
+
+      build_resources_from response
+    end
+
     def self.create(attributes)
       object = new(attributes)
       response = object.save

@@ -15,11 +15,6 @@ module Mousetrap
       build_resource_from response
     end
 
-    def self.all
-      response = get_resources plural_resource_name
-      build_resources_from response
-    end
-
     def self.create(attributes = {})
       raise NotImplementedError, NO_BUSINESS_NEED
     end

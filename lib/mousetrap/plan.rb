@@ -5,6 +5,11 @@ module Mousetrap
       :code,
       :name
 
+    def self.all
+      response = get_resources plural_resource_name
+      return [] unless response['plans']
+      build_resources_from response
+    end
 
     protected
 
