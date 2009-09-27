@@ -83,15 +83,15 @@ describe Mousetrap::Resource do
       end
     end
 
-    #context "for new records" do
-      #it "does nothing" do
-        #customer = Factory :new_customer
-        #Mousetrap::Customer.should_not_receive(:delete_resource)
-        #customer.destroy
-      #end
-    #end
+    context "for new records" do
+      it "does nothing" do
+        widget = Mousetrap::Widget.new
+        widget.stub :new_record? => true
+        Mousetrap::Customer.should_not_receive(:member_action)
+        widget.destroy
+      end
+    end
   end
-
 
   describe ".delete_resource" do
     it "gets /xml/<resource>/delete/productCode/<my_product_code>/code/<resource_code>" do
