@@ -92,7 +92,10 @@ module Mousetrap
     end
 
     def create
-      self.class.post_resource 'customers', 'new', attributes_for_api
+      response = self.class.post_resource 'customers', 'new', attributes_for_api
+      returned_customer = self.class.build_resource_from response
+      self.id = returned_customer.id
+      response
     end
 
     def update
