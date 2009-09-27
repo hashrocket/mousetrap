@@ -77,6 +77,26 @@ describe "The Wrapper Gem" do
       end
     end
 
+    describe ".destroy_all" do
+      describe "Given a few customers on CheddarGetter" do
+        before :all do
+          Mousetrap::Customer.destroy_all
+          3.times { Factory(:new_customer).save }
+          violated "Couldn't save customers" unless Mousetrap::Customer.all.size == 3
+        end
+
+        describe "When I call .destroy_all" do
+          before :all do
+            Mousetrap::Customer.destroy_all
+          end
+
+          it "Then there should be no customers" do
+            Mousetrap::Customer.all.size.should == 0
+          end
+        end
+      end
+    end
+
     describe "#cancel" do
       describe "Given a customer" do
         before :all do

@@ -64,6 +64,15 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe ".destroy_all" do
+    it "destroys each resource" do
+      all_widgets = [stub, stub, stub]
+      Mousetrap::Widget.stub :all => all_widgets
+      all_widgets.each { |w| w.should_receive :destroy }
+      Mousetrap::Widget.destroy_all
+    end
+  end
+
   describe '#destroy' do
     context "for existing records" do
       it 'destroys' do

@@ -23,6 +23,10 @@ module Mousetrap
       raise NotImplementedError, NO_BUSINESS_NEED
     end
 
+    def self.destroy_all
+      all.each { |object| object.destroy }
+    end
+
     def self.exists?(code)
       raise NotImplementedError, NO_BUSINESS_NEED
     end
