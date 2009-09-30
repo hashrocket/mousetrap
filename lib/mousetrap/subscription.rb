@@ -45,7 +45,7 @@ module Mousetrap
     end
 
     def save
-      mutated_attributes = attributes_for_api(attributes)
+      mutated_attributes = attributes_for_api
       self.class.put_resource('customers', 'edit-subscription', customer_code, mutated_attributes)
     end
 
