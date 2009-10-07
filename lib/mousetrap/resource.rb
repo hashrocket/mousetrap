@@ -61,9 +61,13 @@ module Mousetrap
     end
 
     def self.resource_path(resource, action, code = nil)
-      path = "/xml/#{resource}/#{action}/productCode/#{Mousetrap.product_code}"
-      path += "/code/#{code}" if code
+      path = "/xml/#{resource}/#{action}/productCode/#{uri_encode(Mousetrap.product_code)}"
+      path += "/code/#{uri_encode(code)}" if code
       path
+    end
+
+    def self.uri_encode(value)
+      URI.encode(value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     end
 
     def self.member_action(resource, action, code, attributes = nil)
