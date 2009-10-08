@@ -9,6 +9,7 @@ module Mousetrap
       :credit_card_expiration_month,
       :credit_card_expiration_year,
       :billing_zip_code,
+      :plan,
 
       :customer_code # belongs to customer
 
@@ -22,7 +23,7 @@ module Mousetrap
       :credit_card_type
 
     # TODO:  not sure if .all or .[] will work
-
+    
     def attributes
       {
         :id                           => id,
@@ -49,6 +50,11 @@ module Mousetrap
       self.class.put_resource('customers', 'edit-subscription', customer_code, mutated_attributes)
     end
 
+    def self.new_from_api(attributes)
+      subscription = new(attributes_from_api(attributes))
+      subscription.plan = Plan.new_from_api(attributes['plans']['plan'])
+      subscription
+    end
 
     protected
 

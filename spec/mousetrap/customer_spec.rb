@@ -64,6 +64,12 @@ describe Mousetrap::Customer do
     }
   end
 
+  describe "when having multiple subscriptions" do
+    it "returns the latest one" do
+      Mousetrap::Customer.new_from_api(FULL_CUSTOMER).subscription.should_not be_nil
+    end
+  end
+
   describe '.all' do
     before do
       Mousetrap::Customer.stub :build_resources_from

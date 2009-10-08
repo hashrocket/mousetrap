@@ -1,7 +1,6 @@
 module Mousetrap
   class Plan < Resource
     attr_accessor \
-      :id,
       :code,
       :name
 
@@ -23,9 +22,8 @@ module Mousetrap
 
     def self.attributes_from_api(attributes)
       {
-        :id   => attributes['id'],
         :code => attributes['code'],
-        :name => attributes['name'],
+        :name => attributes['name']
       }
     end
   end

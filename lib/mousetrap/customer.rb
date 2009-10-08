@@ -65,8 +65,8 @@ module Mousetrap
 
     def self.new_from_api(attributes)
       customer = new(attributes_from_api(attributes))
-      customer.subscription = Subscription.new_from_api(
-        attributes['subscriptions']['subscription'])
+      subscription_attrs = attributes['subscriptions']['subscription']
+      customer.subscription = Subscription.new_from_api(subscription_attrs.kind_of?(Array) ? subscription_attrs.first : subscription_attrs)
       customer
     end
 
