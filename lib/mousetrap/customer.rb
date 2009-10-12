@@ -44,7 +44,7 @@ module Mousetrap
       response = get_resources plural_resource_name
 
       if response['error']
-        if response['error'] == "Bad request: No customers found."
+        if response['error'] == 'Resource not found: No customers found.'
           return []
         else
           raise response['error']

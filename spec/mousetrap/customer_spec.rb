@@ -81,7 +81,9 @@ describe Mousetrap::Customer do
     end
 
     it "handles kludgy 'no customers found' response" do
-      Mousetrap::Customer.stub :get_resources => { 'error' => "Bad request: No customers found." }
+      Mousetrap::Customer.stub :get_resources => {
+        'error' => 'Resource not found: No customers found.'
+      }
       Mousetrap::Customer.all.should == []
     end
 
