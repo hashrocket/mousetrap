@@ -115,7 +115,7 @@ describe "The Wrapper Gem" do
               @api_customer = Mousetrap::Customer[@customer.code]
             end
 
-            it "Then I should see a cancelation date on subscription" do
+            it "Then I should see a cancellation date on subscription" do
               @api_customer.subscription.canceled_at.should be
             end
           end
