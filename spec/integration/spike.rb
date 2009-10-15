@@ -37,17 +37,40 @@ end
 def destroy_all_customers
   Mousetrap::Customer.destroy_all
 end
+#create_customer
+
+destroy_all_customers
+
+#code = "rvhljmvenp@example.com"
+#api_customer = Mousetrap::Customer[code]
+##puts api_customer.to_yaml
+
+#customer = Factory :new_customer
+#customer.save
+#api_customer = Mousetrap::Customer[customer.code]
+
+#puts '-' * 80
+#p Mousetrap::Customer[customer.code]
+
+#puts '-' * 80
+#p Mousetrap::Customer.exists? customer.code
+
+#puts '-' * 80
+#p Mousetrap::Customer['cantfindme']
+
+#puts '-' * 80
+#p Mousetrap::Customer.exists? 'cantfindme'
 
 # create_customer
 
-code = 'igcuvfehrc@example.com'
-api_customer = Mousetrap::Customer[code]
-puts api_customer.to_yaml
-puts '-' * 80
-puts 'cancel'
-puts api_customer.cancel
-puts '-' * 80
-api_customer = Mousetrap::Customer[code]
-puts api_customer.to_yaml
+#code = 'igcuvfehrc@example.com'
+#api_customer = Mousetrap::Customer[code]
+#puts api_customer.to_yaml
+#puts '-' * 80
+#puts 'cancel'
+#puts api_customer.cancel
+#puts '-' * 80
+#api_customer = Mousetrap::Customer[code]
+#puts api_customer.to_yaml
 
 
