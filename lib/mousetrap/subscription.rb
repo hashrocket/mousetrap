@@ -22,8 +22,22 @@ module Mousetrap
       :credit_card_last_four_digits,
       :credit_card_type
 
-    # TODO:  not sure if .all or .[] will work
-    
+    def self.[](code)
+      raise NotImplementedError, API_UNSUPPORTED
+    end
+
+    def self.all
+      raise NotImplementedError, API_UNSUPPORTED
+    end
+
+    def self.destroy_all
+      raise NotImplementedError, API_UNSUPPORTED
+    end
+
+    def self.exists?(code)
+      raise NotImplementedError, API_UNSUPPORTED
+    end
+
     def attributes
       {
         :id                           => id,
@@ -48,6 +62,10 @@ module Mousetrap
     def save
       mutated_attributes = attributes_for_api
       self.class.put_resource('customers', 'edit-subscription', customer_code, mutated_attributes)
+    end
+
+    def exists?
+      raise NotImplementedError, API_UNSUPPORTED
     end
 
     def self.new_from_api(attributes)

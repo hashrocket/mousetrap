@@ -14,6 +14,37 @@ describe Mousetrap::Subscription do
   #   ccLastFour: "1111"
   #   canceledDatetime:
 
+  describe '.[]' do
+    it 'raises NotImplementedError' do
+      expect do
+        Mousetrap::Subscription['some_code']
+      end.to raise_error(NotImplementedError, Mousetrap::API_UNSUPPORTED)
+    end
+  end
+
+  describe '.all' do
+    it 'raises NotImplementedError' do
+      expect do
+        Mousetrap::Subscription.all
+      end.to raise_error(NotImplementedError, Mousetrap::API_UNSUPPORTED)
+    end
+  end
+
+  describe '.destroy_all' do
+    it 'raises NotImplementedError' do
+      expect do
+        Mousetrap::Subscription.destroy_all
+      end.to raise_error(NotImplementedError, Mousetrap::API_UNSUPPORTED)
+    end
+  end
+
+  describe '.exists?' do
+    it 'raises NotImplementedError' do
+      expect do
+        Mousetrap::Subscription.exists?('some_code')
+      end.to raise_error(NotImplementedError, Mousetrap::API_UNSUPPORTED)
+    end
+  end
 
   describe "plan" do
     it 'has the correct planCode populated' do
@@ -37,6 +68,15 @@ describe Mousetrap::Subscription do
       Mousetrap::Subscription.attributes_for_api(
         :credit_card_expiration_month => 2
       )[:ccExpMonth].should == '02'
+    end
+  end
+
+  describe '#exists?' do
+    it 'raises NotImplementedError' do
+      expect do
+        s = Mousetrap::Subscription.new
+        s.exists?
+      end.to raise_error(NotImplementedError, Mousetrap::API_UNSUPPORTED)
     end
   end
 end

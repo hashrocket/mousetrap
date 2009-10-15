@@ -89,6 +89,23 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe ".exists?" do
+    it "gets by code" do
+      Mousetrap::Widget.should_receive(:[]).with('some_resource_code')
+      Mousetrap::Widget.exists? 'some_resource_code'
+    end
+
+    it "returns true when resource exists" do
+      Mousetrap::Widget.stub :[] => stub('some_widget')
+      Mousetrap::Widget.exists?('some_resource_code').should be_true
+    end
+
+    it "returns false when resource doesn't exist" do
+      Mousetrap::Widget.stub :[] => nil
+      Mousetrap::Widget.exists?('some_resource_code').should be_false
+    end
+  end
+
   describe '#destroy' do
     context "for existing records" do
       it 'destroys' do
@@ -106,6 +123,14 @@ describe Mousetrap::Resource do
         Mousetrap::Customer.should_not_receive(:member_action)
         widget.destroy
       end
+    end
+  end
+
+  describe "#exists?" do
+    it "calls .exists? with code" do
+      Mousetrap::Widget.should_receive(:exists?).with('some_resource_code')
+      r = Mousetrap::Widget.new :code => 'some_resource_code'
+      r.exists?
     end
   end
 

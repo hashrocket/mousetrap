@@ -42,15 +42,15 @@ module Mousetrap
     end
 
     def self.exists?(code)
-      raise NotImplementedError, NO_BUSINESS_NEED
+      !self[code].nil?
     end
 
     def destroy
       member_action 'delete' unless new_record?
     end
 
-    def exists?(code)
-      raise NotImplementedError, NO_BUSINESS_NEED
+    def exists?
+      self.class.exists?(code)
     end
 
     def new?
