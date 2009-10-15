@@ -11,7 +11,21 @@ module Mousetrap
     end
 
     def self.[](code)
+      # Example error message:
+      #
+      # { "error" => "Resource not found: Customer not found for
+      #    code=cantfindme within productCode=MOUSETRAP_TEST"}
+
       response = get_resource plural_resource_name, code
+
+      if response['error']
+        if response['error'] =~ /Resource not found/
+          return nil
+        else
+          raise response['error']
+        end
+      end
+
       build_resource_from response
     end
 

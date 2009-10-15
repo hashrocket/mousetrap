@@ -62,6 +62,22 @@ describe Mousetrap::Resource do
       it { should_not be_new_record }
       it { subject.code.should == @code }
     end
+
+    context "when there's errors" do
+      it "handles kludgy 'Resource not found' response" do
+        Mousetrap::Widget.stub :get_resource => {
+          'error' => 'Resource not found: Customer not found for code=cantfindme within productCode=MOUSETRAP_TEST'
+        }
+        Mousetrap::Widget['cantfindme'].should be_nil
+      end
+
+      it "raises error if response has one" do
+        expect do
+          Mousetrap::Widget.stub :get_resource => { 'error' => 'some other error' }
+          Mousetrap::Widget['some_resource_code'].should be_nil
+        end.to raise_error(RuntimeError, 'some other error')
+      end
+    end
   end
 
   describe ".destroy_all" do
