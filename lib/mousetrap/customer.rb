@@ -53,7 +53,7 @@ module Mousetrap
     end
 
     def self.all
-      response = get_resources plural_resource_name
+      response = get_resources 'customers'
 
       if response['error']
         if response['error'] == 'Resource not found: No customers found.'
