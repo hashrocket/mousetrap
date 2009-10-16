@@ -134,6 +134,19 @@ describe Mousetrap::Resource do
     end
   end
 
+  describe '#new?' do
+    it 'is true if id is nil' do
+      s = Mousetrap::Widget.new
+      s.should be_new
+    end
+
+    it 'is false if id exists' do
+      s = Mousetrap::Widget.new
+      s.stub :id => 'some_id'
+      s.should_not be_new
+    end
+  end
+
   describe ".delete_resource" do
     it "gets /xml/<resource>/delete/productCode/<my_product_code>/code/<resource_code>" do
       subject.should_receive(:post).with('/xml/widgets/delete/productCode/my_product_code/code/some_resource_code')
