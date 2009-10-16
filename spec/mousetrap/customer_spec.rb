@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
+  include Fixtures
   # customers: 
   #   customer: 
   #     firstName: nvnawrelyv
@@ -66,7 +67,7 @@ describe Mousetrap::Customer do
 
   describe "when having multiple subscriptions" do
     it "returns the latest one" do
-      Mousetrap::Customer.new_from_api(FULL_CUSTOMER).subscription.should_not be_nil
+      Mousetrap::Customer.new_from_api(full_customer).subscription.should_not be_nil
     end
   end
 
