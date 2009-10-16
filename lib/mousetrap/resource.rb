@@ -29,14 +29,6 @@ module Mousetrap
       build_resource_from response
     end
 
-    def self.create(attributes = {})
-      raise NotImplementedError, NO_BUSINESS_NEED
-    end
-
-    def self.delete(code)
-      raise NotImplementedError, NO_BUSINESS_NEED
-    end
-
     def self.destroy_all
       all.each { |object| object.destroy }
     end
@@ -61,10 +53,6 @@ module Mousetrap
 
     def self.new_from_api(attributes)
       new(attributes_from_api(attributes))
-    end
-
-    def save
-      raise NotImplementedError, NO_BUSINESS_NEED
     end
 
 
@@ -115,14 +103,6 @@ module Mousetrap
       post path, :body => attributes
     end
 
-    def self.plural_resource_name
-      raise 'You must implement self.plural_resource_name in your subclass.'
-    end
-
-    def self.singular_resource_name
-      raise 'You must implement self.singular_resource_name in your subclass.'
-    end
-
     def self.build_resource_from(response)
       resource_attributes = extract_resources(response)
       new_from_api(resource_attributes)
@@ -146,6 +126,10 @@ module Mousetrap
 
     def self.extract_resources(response)
       response[plural_resource_name][singular_resource_name]
+    end
+
+    def self.raise_api_unsupported_error
+      raise NotImplementedError, API_UNSUPPORTED
     end
   end
 end

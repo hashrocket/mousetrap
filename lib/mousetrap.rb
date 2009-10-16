@@ -4,7 +4,6 @@ begin; require 'rubygems'; rescue LoadError; end
 require 'httparty'
 
 module Mousetrap
-  NO_BUSINESS_NEED = "No business need at this time."
   API_UNSUPPORTED = "CheddarGetter API doesn't support this."
 
   autoload :Customer,     'mousetrap/customer'
