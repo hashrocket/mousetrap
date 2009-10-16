@@ -20,3 +20,10 @@ Factory.define :subscription, :class => Mousetrap::Subscription, :default_strate
   f.credit_card_expiration_year '2012'
   f.billing_zip_code '90210'
 end
+
+Factory.define :alternate_subscription, :parent => :subscription, :default_strategy => :stub do |f|
+  f.credit_card_number '5555555555554444'
+  f.credit_card_expiration_month '7'
+  f.credit_card_expiration_year '2013'
+  f.billing_zip_code '12345'
+end
