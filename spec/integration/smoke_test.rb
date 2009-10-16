@@ -209,5 +209,30 @@ describe "The Wrapper Gem" do
         end
       end
     end
+
+    describe '#switch_to_plan' do
+      describe "Given an existing CheddarGetter customer" do
+        before :all do
+          @customer = Factory :new_customer
+          @customer.save
+        end
+
+        describe 'When I switch plans' do
+          before :all do
+            @customer.switch_to_plan('TEST_2')
+          end
+
+          describe "And I get the customer" do
+            before :all do
+              @api_customer = Mousetrap::Customer[@customer.code]
+            end
+
+            it 'Then they should be on the new plan' do
+              @api_customer.subscription.plan.code.should == 'TEST_2'
+            end
+          end
+        end
+      end
+    end
   end
 end

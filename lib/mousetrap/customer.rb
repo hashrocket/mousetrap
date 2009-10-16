@@ -52,6 +52,15 @@ module Mousetrap
       new? ? create : update
     end
 
+    def switch_to_plan(plan_code)
+      raise "Can only call this on an existing CheddarGetter customer." unless exists?
+
+      attributes = { :planCode => plan_code }
+      self.class.put_resource('customers', 'edit-subscription', code, attributes)
+
+      # TODO: Refresh self with reload here?
+    end
+
     def self.all
       response = get_resources 'customers'
 

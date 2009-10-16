@@ -221,6 +221,22 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe "#switch_to_plan" do
+    it "raises an error if not existing CheddarGetter customer" do
+      c = Mousetrap::Customer.new :code => 'some_customer_code'
+      c.stub :exists? => false
+      expect { c.switch_to_plan 'some_plan_code' }.to raise_error(/existing/)
+    end
+
+    it "puts a subscription with a plan code" do
+      c = Mousetrap::Customer.new :code => 'some_customer_code'
+      c.stub :exists? => true
+      c.class.should_receive(:put_resource).with(
+        'customers', 'edit-subscription', 'some_customer_code', { :planCode => 'some_plan_code' })
+      c.switch_to_plan 'some_plan_code'
+    end
+  end
+
   describe "protected methods" do
     describe "#create" do
       before do
