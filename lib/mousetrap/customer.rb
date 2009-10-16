@@ -23,17 +23,29 @@ module Mousetrap
     end
 
     def attributes_for_api
-      a = self.class.attributes_for_api(attributes, new_record?)
+      # TODO: superclass?
+      self.class.attributes_for_api(attributes, new_record?)
+    end
 
-      if subscription
-        a[:subscription] = subscription.attributes_for_api
-      end
-
+    def attributes_for_api_with_subscription
+      raise "Must have subscription" unless subscription
+      a = attributes_for_api
+      a[:subscription] = subscription.attributes_for_api
       a
     end
 
     def cancel
       member_action 'cancel' unless new_record?
+    end
+
+    def new?
+      if api_customer = self.class[code]
+        self.id = api_customer.id
+
+        return false
+      else
+        return true
+      end
     end
 
     def save
@@ -102,7 +114,7 @@ module Mousetrap
     end
 
     def create
-      response = self.class.post_resource 'customers', 'new', attributes_for_api
+      response = self.class.post_resource 'customers', 'new', attributes_for_api_with_subscription
 
       raise response['error'] if response['error']
 
@@ -112,7 +124,11 @@ module Mousetrap
     end
 
     def update
-      self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
+      if subscription
+        self.class.put_resource 'customers', 'edit', code, attributes_for_api_with_subscription
+      else
+        self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
+      end
     end
   end
 end

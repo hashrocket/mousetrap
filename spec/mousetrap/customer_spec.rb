@@ -180,27 +180,84 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe "#new?" do
+    it "looks up the customer on CheddarGetter" do
+      c = Mousetrap::Customer.new :code => 'some_customer_code'
+      Mousetrap::Customer.should_receive(:[]).with('some_customer_code')
+      c.new?
+    end
+
+    context "with an existing CheddarGetter record" do
+      before do
+        Mousetrap::Customer.stub(:[] => stub(:id => 'some_customer_id'))
+      end
+
+      it "grabs the id from CheddarGetter and assigns it locally" do
+        c = Mousetrap::Customer.new :code => 'some_customer_code'
+        c.should_receive(:id=).with('some_customer_id')
+        c.new?
+      end
+
+      it "is false" do
+        c = Mousetrap::Customer.new
+        c.should_not be_new
+      end
+    end
+
+    context "without a CheddarGetter record" do
+      before do
+        Mousetrap::Customer.stub :[] => nil
+      end
+
+      it "is true" do
+        c = Mousetrap::Customer.new
+        c.should be_new
+      end
+    end
+  end
+
   describe '#save' do
     context "for existing records" do
       before do
         @customer = Factory :existing_customer
+        @customer.stub :new? => false
       end
 
-      it 'posts to edit-customer action' do
-        attributes_for_api = customer_attributes_for_api(@customer)
+      context "with subscription association set up" do
+        it 'posts to edit action' do
+          attributes_for_api = customer_attributes_for_api(@customer)
 
-        # We don't send code for existing API resources.
-        attributes_for_api.delete(:code)
+          # We don't send code for existing API resources.
+          attributes_for_api.delete(:code)
 
-        @customer.class.should_receive(:put_resource).with(
-          'customers', 'edit-customer', @customer.code, attributes_for_api)
-        @customer.save
+          @customer.class.should_receive(:put_resource).with(
+            'customers', 'edit', @customer.code, attributes_for_api)
+          @customer.save
+        end
+      end
+
+      context "with no subscription association" do
+        it 'posts to edit action' do
+          attributes_for_api = customer_attributes_for_api(@customer)
+
+          # We don't send code for existing API resources.
+          attributes_for_api.delete(:code)
+
+          attributes_for_api.delete(:subscription)
+          @customer.subscription = nil
+
+          @customer.class.should_receive(:put_resource).with(
+            'customers', 'edit-customer', @customer.code, attributes_for_api)
+          @customer.save
+        end
       end
     end
 
     context "for new records" do
       it 'calls create' do
         customer = Factory :new_customer
+        customer.stub :new? => true
+        Mousetrap::Customer.stub :exists? => false
         customer.should_receive(:create)
         customer.save
       end
