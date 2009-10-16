@@ -263,4 +263,43 @@ describe Mousetrap::Customer do
       end
     end
   end
+
+  describe "protected methods" do
+    describe "#create" do
+      before do
+        @customer = Mousetrap::Customer.new
+        @customer.stub :attributes_for_api_with_subscription => 'some_attributes'
+      end
+
+      it "posts a new customer" do
+        @customer.class.should_receive(:post_resource).with('customers', 'new', 'some_attributes').and_return({:id => 'some_id'})
+        @customer.class.stub :build_resource_from
+        @customer.send :create
+      end
+
+      it "raises error is CheddarGetter reports one" do
+        @customer.class.stub :post_resource => {'error' => 'some error message'}
+        expect { @customer.send(:create) }.to raise_error('some error message')
+      end
+
+      it "builds a customer from the CheddarGetter return values" do
+        @customer.class.stub :post_resource => 'some response'
+        @customer.class.should_receive(:build_resource_from).with('some response').and_return(:id => 'some_id')
+        @customer.send :create
+      end
+
+      it "grabs the id from CheddarGetter and assigns it locally" do
+        @customer.class.stub :post_resource => {}
+        @customer.class.stub :build_resource_from => stub(:id => 'some_id')
+        @customer.should_receive(:id=).with('some_id')
+        @customer.send :create
+      end
+
+      it "returns the response" do
+        @customer.class.stub :post_resource => { :some => :response }
+        @customer.class.stub :build_resource_from => stub(:id => 'some_id')
+        @customer.send(:create).should == { :some => :response }
+      end
+    end
+  end
 end
