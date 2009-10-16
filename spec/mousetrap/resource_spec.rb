@@ -147,40 +147,42 @@ describe Mousetrap::Resource do
     end
   end
 
-  describe ".delete_resource" do
-    it "gets /xml/<resource>/delete/productCode/<my_product_code>/code/<resource_code>" do
-      subject.should_receive(:post).with('/xml/widgets/delete/productCode/my_product_code/code/some_resource_code')
-      subject.delete_resource 'widgets', 'some_resource_code'
+  describe "protected methods" do
+    describe ".delete_resource" do
+      it "gets /xml/<resource>/delete/productCode/<my_product_code>/code/<resource_code>" do
+        subject.should_receive(:post).with('/xml/widgets/delete/productCode/my_product_code/code/some_resource_code')
+        subject.delete_resource 'widgets', 'some_resource_code'
+      end
     end
-  end
 
-  describe ".get_resource" do
-    it "gets /xml/<resource>/get/productCode/<my_product_code>/code/<resource_code>" do
-      subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code/code/some%2Bresource%2Bcode')
-      subject.get_resource 'widgets', 'some+resource+code'
+    describe ".get_resource" do
+      it "gets /xml/<resource>/get/productCode/<my_product_code>/code/<resource_code>" do
+        subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code/code/some%2Bresource%2Bcode')
+        subject.get_resource 'widgets', 'some+resource+code'
+      end
     end
-  end
 
-  describe ".get_resources" do
-    it "gets /xml/<resource>/get/productCode/<my_product_code>" do
-      subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code')
-      subject.get_resources 'widgets'
+    describe ".get_resources" do
+      it "gets /xml/<resource>/get/productCode/<my_product_code>" do
+        subject.should_receive(:get).with('/xml/widgets/get/productCode/my_product_code')
+        subject.get_resources 'widgets'
+      end
     end
-  end
 
-  describe ".post_resource" do
-    it "posts to /xml/<resource>/<action>/productCode/<product_code>" do
-      subject.should_receive(:post).with('/xml/widgets/some_action/productCode/my_product_code', :body => 'some_hash')
-      subject.post_resource 'widgets', 'some_action', 'some_hash'
+    describe ".post_resource" do
+      it "posts to /xml/<resource>/<action>/productCode/<product_code>" do
+        subject.should_receive(:post).with('/xml/widgets/some_action/productCode/my_product_code', :body => 'some_hash')
+        subject.post_resource 'widgets', 'some_action', 'some_hash'
+      end
     end
-  end
 
-  describe ".put_resource" do
-    it "puts to /xml/<resource>/<action>/productCode/<product_code>/code/<resource_code>" do
-      subject.should_receive(:post).with(
-        '/xml/widgets/some_action/productCode/my_product_code/code/some_widget_code',
-        :body => 'some_hash')
-      subject.put_resource 'widgets', 'some_action', 'some_widget_code', 'some_hash'
+    describe ".put_resource" do
+      it "puts to /xml/<resource>/<action>/productCode/<product_code>/code/<resource_code>" do
+        subject.should_receive(:post).with(
+          '/xml/widgets/some_action/productCode/my_product_code/code/some_widget_code',
+          :body => 'some_hash')
+        subject.put_resource 'widgets', 'some_action', 'some_widget_code', 'some_hash'
+      end
     end
   end
 end
