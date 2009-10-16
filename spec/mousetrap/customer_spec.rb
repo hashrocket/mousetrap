@@ -2,50 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
   include Fixtures
-  # customers: 
-  #   customer: 
-  #     firstName: nvnawrelyv
-  #     lastName: vklidifvfd
-  #     email: bvvljaeegs@example.com
-  #     code: ablntsorai@example.com
-  #     company: 
-  #     gatewayToken: 
-  #     id: eac1cf0e-fc5b-102c-a92d-40402145ee8b
-  #     createdDatetime: "2009-09-27T02:16:15+00:00"
-  #     modifiedDatetime: "2009-09-27T02:16:16+00:00"
-  #     subscriptions: 
-  #       subscription: 
-  #         gatewayToken: 
-  #         id: eac26b4e-fc5b-102c-a92d-40402145ee8b
-  #         createdDatetime: "2009-09-27T02:16:15+00:00"
-  #         ccType: visa
-  #         ccLastFour: "1111"
-  #         ccExpirationDate: "2012-12-31T00:00:00+00:00"
-  #         canceledDatetime: 
-  #         plans: 
-  #           plan: 
-  #             name: Test
-  #             setupChargeAmount: "0.00"
-  #             code: TEST
-  #             recurringChargeAmount: "42.00"
-  #             billingFrequencyQuantity: "1"
-  #             trialDays: "0"
-  #             id: 5fbb9a84-e27f-102c-a92d-40402145ee8b
-  #             billingFrequency: monthly
-  #             createdDatetime: "2009-08-25T04:24:34+00:00"
-  #             recurringChargeCode: TEST_RECURRING
-  #             isActive: "1"
-  #             billingFrequencyUnit: months
-  #             description: Test
-  #             billingFrequencyPer: month
-  #             setupChargeCode: TEST_SETUP
-  #         invoices: 
-  #           invoice: 
-  #             number: "2"
-  #             billingDatetime: "2009-10-27T02:16:15+00:00"
-  #             id: eac74d62-fc5b-102c-a92d-40402145ee8b
-  #             createdDatetime: "2009-09-27T02:16:15+00:00"
-  #             type: subscription
   
   def customer_attributes_for_api(customer)
     {
@@ -304,3 +260,77 @@ describe Mousetrap::Customer do
     end
   end
 end
+
+
+__END__
+
+customers: 
+  customer: 
+    company: 
+    lastName: cgejerpkyw
+    code: krylmrreef@example.com
+    subscriptions: 
+      subscription: 
+        plans: 
+          plan: 
+            name: Test
+            setupChargeAmount: "42.00"
+            code: TEST
+            recurringChargeAmount: "13.00"
+            billingFrequencyQuantity: "1"
+            trialDays: "0"
+            id: 8e933180-08b5-102d-a92d-40402145ee8b
+            billingFrequency: monthly
+            createdDatetime: "2009-10-12T19:28:09+00:00"
+            recurringChargeCode: TEST_RECURRING
+            isActive: "1"
+            billingFrequencyUnit: months
+            description: This is my test plan. There are many like it, but this one is mine.
+            billingFrequencyPer: month
+            setupChargeCode: TEST_SETUP
+        gatewayToken: 
+        id: 7ccea6de-0a4d-102d-a92d-40402145ee8b
+        createdDatetime: "2009-10-14T20:08:14+00:00"
+        ccType: visa
+        ccLastFour: "1111"
+        ccExpirationDate: "2012-12-31T00:00:00+00:00"
+        canceledDatetime: 
+        invoices: 
+          invoice: 
+          - number: "5"
+            transactions: 
+              transaction: 
+                response: approved
+                code: ""
+                amount: "42.00"
+                memo: This is a simulated transaction
+                id: 7ce53c78-0a4d-102d-a92d-40402145ee8b
+                createdDatetime: "2009-10-14T20:08:14+00:00"
+                transactedDatetime: "2009-10-14T20:08:14+00:00"
+                parentId: 
+                charges: 
+                  charge: 
+                    code: TEST_SETUP
+                    quantity: "1"
+                    id: 7ce2cb6e-0a4d-102d-a92d-40402145ee8b
+                    createdDatetime: "2009-10-14T20:08:14+00:00"
+                    type: setup
+                    eachAmount: "42.00"
+                    description: 
+                gatewayAccount: 
+                  id: ""
+            billingDatetime: "2009-10-14T20:08:14+00:00"
+            id: 7cd25072-0a4d-102d-a92d-40402145ee8b
+            createdDatetime: "2009-10-14T20:08:14+00:00"
+            type: setup
+          - number: "6"
+            billingDatetime: "2009-11-14T20:08:14+00:00"
+            id: 7cd4253c-0a4d-102d-a92d-40402145ee8b
+            createdDatetime: "2009-10-14T20:08:14+00:00"
+            type: subscription
+    gatewayToken: 
+    id: 7ccd6e5e-0a4d-102d-a92d-40402145ee8b
+    createdDatetime: "2009-10-14T20:08:14+00:00"
+    modifiedDatetime: "2009-10-14T20:08:14+00:00"
+    firstName: wqaqyhjdfg
+    email: krylmrreef@example.com

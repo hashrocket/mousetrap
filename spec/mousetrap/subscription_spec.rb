@@ -53,6 +53,7 @@ describe Mousetrap::Subscription do
       Mousetrap::Subscription.new_from_api(multiple_subscriptions.first).plan.should_not be_nil
     end
   end
+
   describe '#destroy' do
     it "raises a NotImplementedError" do
       expect do
@@ -61,7 +62,7 @@ describe Mousetrap::Subscription do
     end
   end
 
-  describe '::attributes_for_api' do
+  describe '.attributes_for_api' do
     it 'coerces the month to 2 digits' do
       Mousetrap::Subscription.attributes_for_api(
         :credit_card_expiration_month => 2
