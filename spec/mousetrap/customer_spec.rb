@@ -8,6 +8,7 @@ describe Mousetrap::Customer do
       :firstName => customer.first_name,
       :lastName => customer.last_name,
       :email => customer.email,
+      :company => customer.company,
       :code => customer.code,
       :subscription => {
         :planCode     => customer.subscription.plan_code,

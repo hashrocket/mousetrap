@@ -2,6 +2,7 @@ Factory.define :new_customer, :class => Mousetrap::Customer, :default_strategy =
   f.email { random_email_address }
   f.first_name { random_string }
   f.last_name { random_string }
+  f.company { random_string }
   f.code { |me| me.email }
   f.add_attribute :id, nil
   f.subscription_attributes { Factory.attributes_for :subscription }

@@ -35,6 +35,10 @@ shared_examples_for "a Customer record from CheddarGetter" do
       @api_customer.last_name.should == @customer.last_name
     end
 
+    it "And I should see company" do
+      @api_customer.company.should == @customer.company
+    end
+
     it "And I should see the code" do
       @api_customer.code.should == @customer.code
     end
@@ -191,6 +195,7 @@ describe "The Wrapper Gem" do
             @customer.first_name = attributes[:first_name]
             @customer.last_name = attributes[:last_name]
             @customer.email = attributes[:email]
+            @customer.company = attributes[:company]
             @customer.save
           end
 

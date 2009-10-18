@@ -6,6 +6,7 @@ module Mousetrap
       :email,
       :first_name,
       :last_name,
+      :company,
       :subscription
 
     def subscription_attributes=(attributes)
@@ -19,6 +20,7 @@ module Mousetrap
         :email      => email,
         :first_name => first_name,
         :last_name  => last_name,
+        :company    => company
       }
     end
 
@@ -107,6 +109,7 @@ module Mousetrap
         :email     => attributes[:email],
         :firstName => attributes[:first_name],
         :lastName  => attributes[:last_name],
+        :company   => attributes[:company]
       }
       mutated_hash.merge!(:code => attributes[:code]) if new_record
       mutated_hash
@@ -118,6 +121,7 @@ module Mousetrap
         :code       => attributes['code'],
         :first_name => attributes['firstName'],
         :last_name  => attributes['lastName'],
+        :company    => attributes['company'],
         :email      => attributes['email']
       }
     end
