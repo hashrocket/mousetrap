@@ -138,10 +138,12 @@ module Mousetrap
 
     def update
       if subscription
-        self.class.put_resource 'customers', 'edit', code, attributes_for_api_with_subscription
+        response = self.class.put_resource 'customers', 'edit', code, attributes_for_api_with_subscription
       else
-        self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
+        response = self.class.put_resource 'customers', 'edit-customer', code, attributes_for_api
       end
+
+      raise response['error'] if response['error']
     end
   end
 end

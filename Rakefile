@@ -12,8 +12,8 @@ begin
     gem.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
     gem.add_dependency 'httparty', '>= 0.4.2'
     gem.add_development_dependency "activesupport", '>= 2.3.3'
-    gem.add_development_dependency "rspec", '>= 1.2.8'
-    gem.add_development_dependency 'thoughtbot-factory_girl', '>= 1.2.2'
+    gem.add_development_dependency "rspec", '>= 1.2.9'
+    gem.add_development_dependency 'factory_girl', '>= 1.2.3'
   end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"

@@ -188,8 +188,7 @@ describe Mousetrap::Customer do
           # We don't send code for existing API resources.
           attributes_for_api.delete(:code)
 
-          @customer.class.should_receive(:put_resource).with(
-            'customers', 'edit', @customer.code, attributes_for_api)
+          @customer.class.should_receive(:put_resource).with('customers', 'edit', @customer.code, attributes_for_api).and_return({:id => 'some_id'})
           @customer.save
         end
       end
@@ -204,8 +203,7 @@ describe Mousetrap::Customer do
           attributes_for_api.delete(:subscription)
           @customer.subscription = nil
 
-          @customer.class.should_receive(:put_resource).with(
-            'customers', 'edit-customer', @customer.code, attributes_for_api)
+          @customer.class.should_receive(:put_resource).with('customers', 'edit-customer', @customer.code, attributes_for_api).and_return({:id => 'some_id'})
           @customer.save
         end
       end
@@ -251,7 +249,7 @@ describe Mousetrap::Customer do
         @customer.send :create
       end
 
-      it "raises error is CheddarGetter reports one" do
+      it "raises error if CheddarGetter reports one" do
         @customer.class.stub :post_resource => {'error' => 'some error message'}
         expect { @customer.send(:create) }.to raise_error('some error message')
       end
@@ -273,6 +271,31 @@ describe Mousetrap::Customer do
         @customer.class.stub :post_resource => { :some => :response }
         @customer.class.stub :build_resource_from => stub(:id => 'some_id')
         @customer.send(:create).should == { :some => :response }
+      end
+    end
+
+    describe "#update" do
+      context "when there's a subscription instance" do
+        let(:customer) { Mousetrap::Customer.new :code => 'some code' }
+
+        it "puts the customer with subscription when there's a subscription instance" do
+          customer.stub :subscription => stub
+          customer.stub :attributes_for_api_with_subscription => 'some attributes with subscription'
+          customer.class.should_receive(:put_resource).with('customers', 'edit', 'some code', 'some attributes with subscription').and_return({:id => 'some_id'})
+          customer.send :update
+        end
+
+        it "puts just the customer when no subscription instance" do
+          customer.stub :subscription => nil
+          customer.stub :attributes_for_api => 'some attributes'
+          customer.class.should_receive(:put_resource).with('customers', 'edit-customer', 'some code', 'some attributes').and_return({:id => 'some_id'})
+          customer.send :update
+        end
+
+        it "raises error if CheddarGetter reports one" do
+          customer.class.stub :put_resource => {'error' => 'some error message'}
+          expect { customer.send(:update) }.to raise_error('some error message')
+        end
       end
     end
   end
