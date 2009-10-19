@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mousetrap}
-  s.version = "0.4.1"
+  s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
@@ -68,18 +68,18 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0.4.2"])
       s.add_development_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_development_dependency(%q<rspec>, [">= 1.2.8"])
-      s.add_development_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
+      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_development_dependency(%q<factory_girl>, [">= 1.2.3"])
     else
       s.add_dependency(%q<httparty>, [">= 0.4.2"])
       s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_dependency(%q<rspec>, [">= 1.2.8"])
-      s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
+      s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0.4.2"])
     s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-    s.add_dependency(%q<rspec>, [">= 1.2.8"])
-    s.add_dependency(%q<thoughtbot-factory_girl>, [">= 1.2.2"])
+    s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
   end
 end
