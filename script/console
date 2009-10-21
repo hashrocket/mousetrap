@@ -1,0 +1,1 @@
+irb -r ubygems -r lib/mousetrap.rb -r factory_girl -r spec/support/random_data.rb -r script/authenticate.rb
