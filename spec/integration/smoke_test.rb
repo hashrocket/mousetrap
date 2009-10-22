@@ -240,4 +240,30 @@ describe "The Wrapper Gem" do
       end
     end
   end
+
+  describe Mousetrap::Subscription do
+    describe "Given a customer on CheddarGetter" do
+      before :all do
+        @customer = Factory :new_customer
+        violated "Use a visa for setup" unless @customer.subscription.credit_card_number == '4111111111111111'
+        @customer.save
+      end
+
+      describe "When I update a subscription field" do
+        before :all do
+          Mousetrap::Subscription.update @customer.code, :credit_card_number => '5555555555554444'
+        end
+
+        describe "And I get the customer" do
+          before :all do
+            @api_customer = Mousetrap::Customer[@customer.code]
+          end
+
+          it 'Then I should see the updated field' do
+            @api_customer.subscription.credit_card_last_four_digits.should == '4444'
+          end
+        end
+      end
+    end
+  end
 end

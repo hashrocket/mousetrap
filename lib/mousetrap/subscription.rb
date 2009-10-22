@@ -59,11 +59,6 @@ module Mousetrap
       self.class.raise_api_unsupported_error
     end
 
-    def save
-      mutated_attributes = attributes_for_api
-      self.class.put_resource('customers', 'edit-subscription', customer_code, mutated_attributes)
-    end
-
     def exists?
       self.class.raise_api_unsupported_error
     end
@@ -73,6 +68,22 @@ module Mousetrap
       subscription.plan = Plan.new_from_api(attributes['plans']['plan'])
       subscription
     end
+
+    def self.update(customer_code, attributes)
+      mutated_attributes = attributes_for_api(attributes)
+
+      mutated_attributes.delete_if { |k, v| v.blank? }
+
+      response = put_resource(
+        'customers',
+        'edit-subscription',
+        customer_code,
+        mutated_attributes
+      )
+
+      raise response['error'] if response['error']
+    end
+
 
     protected
 
