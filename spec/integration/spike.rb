@@ -42,21 +42,35 @@ end
 destroy_all_customers
 customer = Factory :new_customer
 customer.save
+
 api_customer = Mousetrap::Customer[customer.code]
 puts api_customer.to_yaml
 puts '-' * 80
 
-customer_only_fields = Mousetrap::Customer.new \
-  :first_name => 'first',
-  :last_name => 'last',
-  :company => 'company',
-  :email => 'random@example.com',
-  :code => customer.code
-
-customer_only_fields.save
+Mousetrap::Subscription.update customer.code, {
+  :billing_first_name => 'x',
+  :billing_last_name => 'y',
+  :credit_card_number => '5555555555554444',
+  :credit_card_expiration_month => '05',
+  :credit_card_expiration_year => '2013',
+  :billing_zip_code => '31415'
+}
 
 api_customer = Mousetrap::Customer[customer.code]
 puts api_customer.to_yaml
+puts '-' * 80
+
+#customer_only_fields = Mousetrap::Customer.new \
+  #:first_name => 'first',
+  #:last_name => 'last',
+  #:company => 'company',
+  #:email => 'random@example.com',
+  #:code => customer.code
+
+#customer_only_fields.save
+
+#api_customer = Mousetrap::Customer[customer.code]
+#puts api_customer.to_yaml
 
 
 #code = "rvhljmvenp@example.com"
