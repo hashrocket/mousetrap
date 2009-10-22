@@ -63,10 +63,20 @@ describe Mousetrap::Subscription do
   end
 
   describe '.attributes_for_api' do
-    it 'coerces the month to 2 digits' do
-      Mousetrap::Subscription.attributes_for_api(
-        :credit_card_expiration_month => 2
-      )[:ccExpMonth].should == '02'
+    context "when month is set" do
+      it 'coerces the month to 2 digits' do
+        Mousetrap::Subscription.attributes_for_api(
+          :credit_card_expiration_month => 2
+        )[:ccExpMonth].should == '02'
+      end
+    end
+
+    context "when month is not set" do
+      it "is nil" do
+        Mousetrap::Subscription.attributes_for_api(
+          :credit_card_expiration_month => nil
+        )[:ccExpMonth].should == nil
+      end
     end
   end
 
