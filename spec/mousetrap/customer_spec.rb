@@ -63,7 +63,7 @@ describe Mousetrap::Customer do
     before do
       @customer_hash = Factory.attributes_for :new_customer
       @customer = Mousetrap::Customer.new @customer_hash
-      @customer.stub(:save)
+      @customer.stub :create
       Mousetrap::Customer.stub(:new => @customer)
       Mousetrap::Customer.stub(:build_resource_from => stub(:id => 0))
     end
@@ -73,14 +73,8 @@ describe Mousetrap::Customer do
       Mousetrap::Customer.create(@customer_hash)
     end
 
-    it 'saves the new customer instance' do
-      @customer.should_receive(:save)
-      Mousetrap::Customer.create(@customer_hash)
-    end
-
-    it 'sets the id of the newly created customer' do
-      Mousetrap::Customer.stub(:build_resource_from => stub(:id => 1))
-      @customer.should_receive(:id=).with(1)
+    it 'creates the new customer instance' do
+      @customer.should_receive :create
       Mousetrap::Customer.create(@customer_hash)
     end
 

@@ -79,10 +79,7 @@ module Mousetrap
 
     def self.create(attributes)
       object = new(attributes)
-      response = object.save
-      returned_customer = build_resource_from response
-      object.id = returned_customer.id
-      # TODO: what other attrs to copy over?
+      object.send(:create)
       object
     end
 
