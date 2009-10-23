@@ -19,7 +19,7 @@ module Mousetrap
       response = get_resource plural_resource_name, code
 
       if response['error']
-        if response['error'] =~ /Resource not found/
+        if response['error'] =~ /not found/
           return nil
         else
           raise response['error']
