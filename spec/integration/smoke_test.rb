@@ -137,6 +137,82 @@ describe "The Wrapper Gem" do
       end
     end
 
+    describe ".update" do
+      describe "Given a customer" do
+        before :all do
+          @customer = Factory :new_customer
+          @api_customer = nil
+
+          # TODO: figure out why multiple records are being created even though
+          # we use "before :all".  Until then, here's the kludge...
+          if Mousetrap::Customer.all.size == 1
+            @api_customer = Mousetrap::Customer.all.first
+            @customer = @api_customer
+          else
+            @customer.save
+            @api_customer = Mousetrap::Customer[@customer.code]
+          end
+        end
+
+        describe "When I update the customer, with only customer attributes" do
+          before :all do
+            @api_customer = Mousetrap::Customer[@customer.code]
+
+            updated_attributes = {
+              :first_name => 'new_first',
+              :last_name => 'new_last',
+              :email => 'new_email@example.com',
+              :company => 'new_company'
+            }
+
+            @customer = Mousetrap::Customer.new updated_attributes
+            @customer.code = @api_customer.code
+            @customer.id = @api_customer.id
+
+            Mousetrap::Customer.update(@api_customer.code, updated_attributes)
+          end
+
+          it_should_behave_like "a Customer record from CheddarGetter"
+        end
+
+        describe "When I update the customer, with customer and subscription attributes" do
+          before :all do
+            @api_customer = Mousetrap::Customer[@customer.code]
+
+            updated_attributes = {
+              :first_name => 'new_first',
+              :last_name => 'new_last',
+              :email => 'new_email@example.com',
+              :company => 'new_company',
+              :subscription_attributes => {
+                :plan_code                    => 'TEST',
+                :billing_first_name           => 'new_billing_first',
+                :billing_last_name            => 'new_billing_last',
+                :credit_card_number           => '5555555555554444',
+                :credit_card_expiration_month => '01',
+                :credit_card_expiration_year  => '2013',
+                :billing_zip_code             => '12345'
+              }
+            }
+
+            @credit_card_type = 'mc'
+
+            @customer = Mousetrap::Customer.new updated_attributes
+
+            # set up our test comparison objects as if they came from API gets
+            @customer.code = @api_customer.code
+            @customer.id = @api_customer.id
+            @customer.subscription.send(:id=, @api_customer.subscription.id)
+
+            Mousetrap::Customer.update(@api_customer.code, updated_attributes)
+          end
+
+          it_should_behave_like "a Customer record from CheddarGetter"
+          it_should_behave_like "an active Subscription record from CheddarGetter"
+        end
+      end
+    end
+
     describe "#cancel" do
       describe "Given a customer" do
         before :all do

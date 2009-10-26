@@ -114,6 +114,32 @@ describe Mousetrap::Customer do
     end
   end
 
+  describe '.update' do
+    def do_update
+      Mousetrap::Customer.update('some customer code', 'some attributes')
+    end
+
+    it "makes a new customer from the attributes" do
+      Mousetrap::Customer.should_receive(:new).with('some attributes').and_return(stub(:null_object => true))
+      do_update
+    end
+
+    it "sets the new customer code to the argument" do
+      customer = mock
+      customer.stub :update
+      Mousetrap::Customer.stub :new => customer
+      customer.should_receive(:code=).with('some customer code')
+      do_update
+    end
+
+    it "calls #update" do
+      customer = mock(:null_object => true)
+      Mousetrap::Customer.stub :new => customer
+      customer.should_receive :update
+      do_update
+    end
+  end
+
   describe '#cancel' do
     context "for existing records" do
       it 'cancels' do

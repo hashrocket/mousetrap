@@ -90,6 +90,12 @@ module Mousetrap
       customer
     end
 
+    def self.update(customer_code, attributes)
+      customer = new(attributes)
+      customer.code = customer_code
+      customer.send :update
+    end
+
 
     protected
 
