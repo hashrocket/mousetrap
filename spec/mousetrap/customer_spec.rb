@@ -265,7 +265,7 @@ describe Mousetrap::Customer do
 
       it "posts a new customer" do
         @customer.class.should_receive(:post_resource).with('customers', 'new', 'some_attributes').and_return({:id => 'some_id'})
-        @customer.class.stub :build_resource_from
+        @customer.class.stub :build_resource_from => stub(:id => 'some_id')
         @customer.send :create
       end
 
@@ -276,7 +276,7 @@ describe Mousetrap::Customer do
 
       it "builds a customer from the CheddarGetter return values" do
         @customer.class.stub :post_resource => 'some response'
-        @customer.class.should_receive(:build_resource_from).with('some response').and_return(:id => 'some_id')
+        @customer.class.should_receive(:build_resource_from).with('some response').and_return(stub(:id => 'some_id'))
         @customer.send :create
       end
 
