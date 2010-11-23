@@ -98,6 +98,10 @@ module Mousetrap
     def self.member_action(resource, action, code, attributes = nil)
       path = resource_path(resource, action, code)
 
+      member_path(path, attributes)
+    end
+    
+    def self.member_path(path, attributes)
       if attributes
         post path, :body => attributes
       else
@@ -118,9 +122,10 @@ module Mousetrap
       raise NotImplementedError, API_UNSUPPORTED
     end
 
-    def self.resource_path(resource, action, code = nil)
+    def self.resource_path(resource, action, code = nil, item_code = nil)
       path = "/xml/#{resource}/#{action}/productCode/#{uri_encode(Mousetrap.product_code)}"
       path += "/code/#{uri_encode(code)}" if code
+      path += "/itemCode/#{uri_encode(item_code)}" if item_code
       path
     end
 
