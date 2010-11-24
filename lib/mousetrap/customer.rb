@@ -161,12 +161,7 @@ module Mousetrap
     end
     
     def change_item_quantity(action, item_code, qty)
-      api_action = case action
-                      when :add
-                        'add-item-quantity'
-                      when :remove
-                        'remove-item-quantity'
-                      end
+      api_action = action.to_s + '-item-quantity'
       
       path = self.class.resource_path('customers', api_action, code, item_code)
       
