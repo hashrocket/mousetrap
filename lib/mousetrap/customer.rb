@@ -102,6 +102,12 @@ module Mousetrap
       customer.send :change_item_quantity, :add, item_code, qty
     end
 
+    def self.remove_item_quantity(customer_code, item_code, qty = nil)
+      customer = self.new
+      customer.code = customer_code
+      customer.send :change_item_quantity, :remove, item_code, qty
+    end
+    
     protected
 
     def self.plural_resource_name
@@ -158,6 +164,8 @@ module Mousetrap
       api_action = case action
                       when :add
                         'add-item-quantity'
+                      when :remove
+                        'remove-item-quantity'
                       end
       
       path = self.class.resource_path('customers', api_action, code, item_code)
