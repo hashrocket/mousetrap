@@ -99,7 +99,7 @@ module Mousetrap
     def self.add_item_quantity(customer_code, item_code, qty = nil)
       customer = self.new
       customer.code = customer_code
-      customer.send :add_item_quantity, item_code, qty
+      customer.send :change_item_quantity, :add, item_code, qty
     end
 
     protected
@@ -154,8 +154,13 @@ module Mousetrap
       raise response['error'] if response['error']
     end
     
-    def add_item_quantity(item_code, qty)
-      path = self.class.resource_path('customers', 'add-item-quantity', code, item_code)
+    def change_item_quantity(action, item_code, qty)
+      api_action = case action
+                      when :add
+                        'add-item-quantity'
+                      end
+      
+      path = self.class.resource_path('customers', api_action, code, item_code)
       
       attributes = qty.nil? ? nil : { :quantity => qty }
       response = self.class.member_path(path, attributes)
