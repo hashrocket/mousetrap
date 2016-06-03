@@ -96,7 +96,18 @@ module Mousetrap
       customer.send :update
     end
 
+    def self.add_item_quantity(customer_code, item_code, qty = nil)
+      customer = self.new
+      customer.code = customer_code
+      customer.send :change_item_quantity, :add, item_code, qty
+    end
 
+    def self.remove_item_quantity(customer_code, item_code, qty = nil)
+      customer = self.new
+      customer.code = customer_code
+      customer.send :change_item_quantity, :remove, item_code, qty
+    end
+    
     protected
 
     def self.plural_resource_name
@@ -147,6 +158,15 @@ module Mousetrap
       end
 
       raise response['error'] if response['error']
+    end
+    
+    def change_item_quantity(action, item_code, qty)
+      api_action = action.to_s + '-item-quantity'
+      
+      path = self.class.resource_path('customers', api_action, code, item_code)
+      
+      attributes = qty.nil? ? nil : { :quantity => qty }
+      response = self.class.member_path(path, attributes)
     end
   end
 end
